@@ -1,21 +1,25 @@
 import logo from './logo.svg';
 import './App.css';
 import './index.css';
-import Card from './components/card.js';
-import Search from './components/search.js';
+import SearchResultPage from './pages/search_result_page';
+import SearchPage from './pages/search_page';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import NavBar from './components/nav';
+import AddWebsite from './pages/add_website';
 function App() {
   return (
-    <div className="App">
-      <NavBar></NavBar>
-      <div>
-      <Search></Search>
-      <div className='p-5'>
-      <h1 className='text-2xl py-3 font-bold'>Category</h1>
-        <hr></hr>
-        <Card title = "Test" name= "Test" description = "Test Description"></Card>
-      </div>
-      </div>
+    <div>
+    <NavBar></NavBar>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<SearchPage/>}> 
+        </Route>
+        <Route path="/result" element={<SearchResultPage/>}></Route>
+        <Route path="/add_website" element={<AddWebsite></AddWebsite>}></Route>
+    
+      </Routes>
+
+    </BrowserRouter>
     </div>
   );
 }

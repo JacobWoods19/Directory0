@@ -1,7 +1,7 @@
 var express = require("express");
 var app = express();
 const cheerio = require("cheerio");
-
+const cors = require('cors');
 const { MongoClient } = require("mongodb");
 const port = 8000;
 var bodyParser = require('body-parser')
@@ -11,16 +11,28 @@ let client = new MongoClient("mongodb+srv://doadmin:6SK073Fneg2E189s@db-mongodb-
   useUnifiedTopology: true,
 });
 
-
+// app.use(cors({
+//     origin: 'http://example.com'
+//   }));
 async function run() {
 
     await client.connect();
-    console.log("Connected correctly to server");
 
+    console.log("Connected correctly to server");
+    app.use(cors());
+    app.use(cors({
+        origin: '*'
+    }));
+    app.use(function(req, res, next) {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        next();
+        });
     //insert website into database
     app.post("/api/website", jsonParser, async (req, res) => {
         // check req.body.name, req.body.description, req.body.url are not empty, or undefined
         if (req.body.name == undefined || req.body.description == undefined || req.body.url == undefined || req.body.price == undefined || req.body.tags == undefined) {
+            
             res.json({message: "Missing required fields"}, 400);
             return;
         }

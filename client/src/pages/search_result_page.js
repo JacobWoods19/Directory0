@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import NavBar from '../components/nav';
 import Search from '../components/search';
 import Card from '../components/card';
-class SearchPage extends React.Component {
+class SearchResultPage extends React.Component {
     constructor(props) { 
         super(props);
         this.state = {
@@ -13,7 +13,12 @@ class SearchPage extends React.Component {
   }
   loadSearchResults() {
     async function getSearchResults() {
-      const response = await fetch('http://localhost:8000/api/websites/sorted');
+      const search_term = window.sessionStorage.getItem("search");
+      const response = await fetch('http://localhost:8000/api/websites/search?' + new URLSearchParams(
+          {
+              tag: search_term
+          }
+      ));
       const data = await response.json();
       return data;
     }
@@ -25,7 +30,7 @@ class SearchPage extends React.Component {
   componentDidMount() {
       const search_term = window.sessionStorage.getItem("search");  
       console.log(search_term);
-      //call api and set state1
+      //call api and set state
       this.loadSearchResults();
   }
   render(){
@@ -33,21 +38,18 @@ class SearchPage extends React.Component {
       <div className="Search">
 
         <div>
-        <h1 className='pt-5 px-5 font-bold text-xl text-slate-700'>Find the best resources for learning how to code!</h1>
-        <hr className='px-5'></hr>
         <Search></Search>
         <div className='p-5'>
-        <h1 className='text-2xl py-3 font-bold'>Top Websites</h1>
+        <h1 className='text-2xl py-3 font-bold'>Results</h1>
           <hr></hr>
-          <div className='py-5'>
+          
           {this.state.search_results.map((result) => {
-            return (<div className='py-2'><Card className ="my-5" title= {result.name} description = {result.description} url = {result.url} tags = {result.tags} upvotes = {result.upvotes}></Card> <hr></hr></div>)
+            return (<div><Card className ="my-5" title= {result.name} description = {result.description} url = {result.url} tags = {result.tags} upvotes = {result.upvotes}></Card> <hr></hr></div>)
           })}
-          </div>
         </div>
         </div>
       </div>
     );
   }
 }
-export default SearchPage;
+export default SearchResultPage;
