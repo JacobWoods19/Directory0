@@ -2,8 +2,16 @@ import React from 'react';
 
 export default function NavBar (props) {
     return(
-        <div className='grid place-items-center p-5'>
-            <img src="Logo.png" className='w-32'></img>
+
+        <div class="flex justify-between p-5">
+        <div class="flex justify-center items-center flex-1">
+        <a href = "/"><img src="Logo.png" class="w-32 object-contain"></img></a>
+        </div>
+        <div class="flex items-center">
+        <a class="bg-white text-slate-800  text-sm hover:bg-slate-400 font-bold py-2 px-4 rounded" href = "/add_website">
+            Submit
+        </a>
+        </div>
         </div>
     )
 }

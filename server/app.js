@@ -52,7 +52,6 @@ async function run() {
             upvotes: 0,
             published_date: new Date(),
             is_published: false,
-            price: req.body.price,
             tags: req.body.tags,
         };
         const website_exists = await client.db("sources").collection('websites').find({url: website.url}).toArray();
@@ -80,10 +79,88 @@ async function run() {
         const results = await client.db("sources").collection('websites').find({tags: tag}).toArray();
         res.json(results);
     });
+    // add youtube video
+    app.post("/api/youtube", jsonParser, async (req, res) => {
+        // check req.body.name, req.body.description, req.body.url are not empty, or undefined
+        if (req.body.title == undefined || req.body.description == undefined || req.body.url == undefined || req.body.tags == []) {
+            res.json({message: "Missing required fields"}, 400);
+            return;
+        }
+        if (req.body.title == "" || req.body.description == "" || req.body.url == "" || req.body.tags == []) {
+            res.json({message: "Missing required fields"}, 400);
+            return;
+        }
+        // check if url is valid, make sure it is a youtube video
+        if (!req.body.url.startsWith("http://") && !req.body.url.startsWith("https://") && (!req.body.url.includes("youtube.com") || !req.body.url.includes("youtu.be")) ) {
+            res.json({message: "Invalid URL"}, 400);
+            return;
+        }
+        const youtube = {
+            title: req.body.title,
+            description: req.body.description,
+            url: req.body.url,
+            channel: req.body.channel,
+            upvotes: 0,
+            published_date: new Date(),
+            is_published: false,
+            tags: req.body.tags,
+        };
+        const youtube_exists = await client.db("sources").collection('videos').find({url: youtube.url}).toArray();
+        if (youtube_exists.length != 0) {
+            res.json({message: "Youtube video already exists in database"}, 400);
+            return;
+        }
+        const result = await client.db("sources").collection('videos').insertOne(youtube);
+        res.json(result);
+    });
+    app.get('/api/videos', async (req, res) => {
+        const results = await client.db("sources").collection('videos').find().toArray();
+        res.json(results);
+    });
+    app.get('/api/videos/sorted', async (req, res) => {
+        const results = await client.db("sources").collection('videos').find().sort({upvotes: -1}).toArray()
+        res.json(results);
+    });
+    app.post("/api/course", jsonParser, async (req, res) => {
+        // check req.body.name, req.body.description, req.body.url are not empty, or undefined
+        if (req.body.name == undefined || req.body.description == undefined || req.body.url == undefined || req.body.price == undefined || req.body.tags == undefined) {
+            
+            res.json({message: "Missing required fields"}, 400);
+            return;
+        }
+        if (req.body.name == "" || req.body.description == "" || req.body.url == "") {
+            res.json({message: "Missing required fields"}, 400);
+            return;
+        }
+        // check if url is valid
+        if (!req.body.url.startsWith("http://") && !req.body.url.startsWith("https://")) {
+            res.json({message: "Invalid URL"}, 400);
+            return;
+        }
+        const course = {
+            name: req.body.name,
+            description: req.body.description,
+            url: req.body.url,
+            upvotes: 0,
+            published_date: new Date(),
+            is_published: false,
+            tags: req.body.tags,
+        };
+        const course_exists = await client.db("sources").collection('courses').find({url: course.url}).toArray();
+        if (course_exists.length != 0) {
+            res.json({message: "Course already exists in database"}, 400);
+            return;
+        }
+        const result = await client.db("sources").collection('courses').insertOne(course);
+        res.json(result);
+    });
+    app.get('/api/courses', async (req, res) => {
+        const results = await client.db("sources").collection('courses').find().toArray();
+        res.json(results);
+    });
 
       
   
-
     app.listen(port, () => {
         console.log(`Example app listening on port ${port}`)
     })

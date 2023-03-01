@@ -44,7 +44,7 @@ class SearchResultPage extends React.Component {
           <hr></hr>
           
           {this.state.search_results.map((result) => {
-            return (<div><Card className ="my-5" title= {result.name} description = {result.description} url = {result.url} tags = {result.tags} upvotes = {result.upvotes}></Card> <hr></hr></div>)
+            return (<div><Card className ="my-5" title= {result.title} description = {result.description} url = {result.url} tags = {result.tags} upvotes = {result.upvotes}></Card> <hr></hr></div>)
           })}
         </div>
         </div>
