@@ -117,6 +117,11 @@ async function run() {
         const results = await client.db("sources").collection('videos').find().toArray();
         res.json(results);
     });
+    app.get('/api/videos/search', async (req, res) => {
+        const tag = req.query.tag;
+        const results = await client.db("sources").collection('videos').find().toArray().find({tags: tag}).toArray();
+        res.json(results);
+    });
     app.get('/api/videos/sorted', async (req, res) => {
         const results = await client.db("sources").collection('videos').find().sort({upvotes: -1}).toArray()
         res.json(results);
