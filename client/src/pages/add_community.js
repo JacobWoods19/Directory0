@@ -64,10 +64,7 @@ class AddCommunity extends React.Component{
                 <a href="/add_project" class="inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 ">Project</a>
             </li>
             <li class="mr-2">
-                <a href="/add_blog" class="inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 ">Blog</a>
-            </li>
-            <li>
-                <a href="/add_book" class="inline-block p-4 text-gray-400 rounded-t-lg dark:text-gray-500">Book</a>
+                <a href="/add_video" class="inline-block p-4 rounded-t-lg">YT Video</a>
             </li>
             <li>
                 <a href="/add_course" class="inline-block p-4 text-gray-400 rounded-t-lg dark:text-gray-500">Course</a>

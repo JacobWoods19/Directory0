@@ -28,9 +28,9 @@ export default function Card (props) {
   }}
 />   
                 <h1 class = "text-white font-semibold px-2">{props.title}</h1>
-               
+                <h1 class = "text-white font-semibold px-2">{props.posted}</h1>
               </div>
-              <h2 class = "text-slate-100 font-semibold px-2 text-sm">{props.description}</h2>
+              <h2 class = "text-slate-100 font-semibold px-2 text-sm">{props.description}*</h2>
               <p className="text-blue-500 font-semibold underline px-2 text-sm">{props.url}</p>
               </a>
             </div>
@@ -40,17 +40,18 @@ export default function Card (props) {
         <h1 class = "text-yellow-500 font-semibold px-2 text-2xl overflow-visible"> {props.upvotes}🥇</h1>
         
         </div>
+        
       </div>
 
       {props.price ? (<button class="mx-3 my-3 py-1 px-2 shadow-md no-underline rounded-full bg-blue-500 text-white font-sans font-semibold text-sm border-blue btn-primary hover:text-white hover:bg-blue-light focus:outline-none active:shadow-none mr-2"></button>) : (<button class="mx-3 my-3 py-1 px-2 shadow-md no-underline rounded-full bg-blue-500 text-white font-sans font-semibold text-sm border-blue btn-primary hover:text-white hover:bg-blue-light focus:outline-none active:shadow-none mr-2">Free</button> )}
-      {
-        props.tags.map((tag) => {
-          return <button class="mx-3 my-3 py-1 px-2 shadow-md no-underline rounded-full bg-blue-500 text-white font-sans font-semibold text-sm border-blue btn-primary hover:text-white hover:bg-blue-light focus:outline-none active:shadow-none mr-2">{tag}</button>
-        }
-        )
-      }
+
+ 
+      <button class="mx-3 my-3 py-1 px-2 shadow-md no-underline rounded-full bg-blue-500 text-white font-sans font-semibold text-sm border-blue btn-primary hover:text-white hover:bg-blue-light focus:outline-none active:shadow-none mr-2">{props.tag}</button>
+
+
       {/* <button class="mx-3 my-3 py-1 px-2 shadow-md no-underline rounded-full bg-blue-500 text-white font-sans font-semibold text-sm border-blue btn-primary hover:text-white hover:bg-blue-light focus:outline-none active:shadow-none mr-2">Machine Learning</button>
       <button class="mx-3 my-3 py-1 px-2 shadow-md no-underline rounded-full bg-blue-500 text-white font-sans font-semibold text-sm border-blue btn-primary hover:text-white hover:bg-blue-light focus:outline-none active:shadow-none mr-2">Python</button> */}
+    <p className="text-gray-900 font-semibold p-2 text-xs">*Directory0 is not a representative of this resource*</p>
     </div>
 
   );

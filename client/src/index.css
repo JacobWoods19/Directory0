@@ -7,3 +7,8 @@
 * {
   font-family: 'Public Sans', sans-serif;
 }
+
+.lanugage_card {
+  width: 3000px; /* or any other fixed value you prefer */
+  height: 2000px; /* or any other fixed value you prefer */
+}

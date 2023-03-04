@@ -7,6 +7,8 @@ import VideoCard from '../components/video_card';
 
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
+import LanguageCard from '../components/language_card';
+import LanguageCards from '../components/language_cards';
 
 class SearchPage extends React.Component {
     constructor(props) { 
@@ -15,7 +17,8 @@ class SearchPage extends React.Component {
             search_term: "",
             website_results: [],
             video_results: [],
-            course_results: []
+            course_results: [],
+            project_results: []
         };
   }
   loadSearchResults() {
@@ -35,6 +38,10 @@ class SearchPage extends React.Component {
     getSearchResults('http://localhost:8000/api/courses').then((data) => {
       console.log(data)
       this.setState({course_results: data});
+    });
+    getSearchResults('http://localhost:8000/api/projects').then((data) => {
+      console.log(data)
+      this.setState({project_results: data});
     });
 
   }
@@ -65,22 +72,29 @@ class SearchPage extends React.Component {
                 </div>
             </Carousel>
             </div>
-            <h1 className='pt-5 px-5 font-bold text-md text-white'>Find the best resources for learning how to code!</h1>
+            <h1 className='pt-5 px-5 font-bold text-md text-white'>Search the best resources for learning how to code!</h1>
             
             <Search></Search>
+            <div className='p-5 flex-mx-auto'>
+            <LanguageCards> </LanguageCards>
+            </div>
             <div className='p-5'> 
                 <h1 className='text-md py-3 font-bold text-white '>Top Websites</h1>
                 {this.state.website_results.map((result) => {
-                  return (<div className='py-2'><Card className ="my-5" title= {result.name} description = {result.description} url = {result.url} tags = {result.tags} upvotes = {result.upvotes}></Card></div>)
+                  return (<div className='py-2'><Card className ="my-5" title= {result.name} description = {result.description} url = {result.url} tag = {result.tag} upvotes = {result.upvotes}></Card></div>)
                 })}
                 <h1 className='text-md py-3 font-bold text-white '>Top Courses</h1>
                 {this.state.course_results.map((result) => {
-                  return (<div className='py-2'><Card className ="my-5" title= {result.name} description = {result.description} url = {result.url} tags = {result.tags} upvotes = {result.upvotes}></Card></div>)
+                  return (<div className='py-2'><Card className ="my-5" title= {result.name} description = {result.description} url = {result.url} tag = {result.tag} upvotes = {result.upvotes}></Card></div>)
+                })}
+                <h1 className='text-md py-3 font-bold text-white '>Top Projects</h1>
+                {this.state.project_results.map((result) => {
+                  return (<div className='py-2'><Card className ="my-5" title= {result.name} description = {result.description} url = {result.url} tag = {result.tag} upvotes = {result.upvotes}></Card></div>)
                 })}
                 <h1 className='text-md py-3 font-bold text-white '>Top Videos</h1>
-                <div className='grid grid-cols-1 gap-9 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
+                <div className='grid grid-cols-1 gap-9 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-5'>
                 {this.state.video_results.map((result) => {
-                    return (<div className='py-2'><VideoCard className ="my-5" title= {result.title} description = {result.description} url = {result.url} tags = {result.tags} upvotes = {result.upvotes}></VideoCard></div>)
+                    return (<div className='py-2'><VideoCard className ="my-5" title= {result.title} description = {result.description} url = {result.url} tag = {result.tag} upvotes = {result.upvotes}></VideoCard></div>)
                   })}
               </div>
             </div>

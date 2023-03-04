@@ -26,11 +26,9 @@ export default function VideoCard (props) {
         <h1 class = "text-slate-200 font-semibold text-md"> {props.upvotes} Upvotes</h1>
         </div>
                 <button class="my-3 py-2 px-5 shadow-md no-underline rounded-full bg-blue-500 text-white font-sans font-bold text-sm border-blue btn-primary hover:text-white hover:bg-blue-light focus:outline-none active:shadow-none mr-2">Free</button>
-        {
-          props.tags.map((tag) => {
-            return <button class=" my-3 py-2 px-5 shadow-md no-underline rounded-full bg-blue-500 text-white font-sans font-bold text-sm border-blue btn-primary hover:text-white hover:bg-blue-light focus:outline-none active:shadow-none mr-2">{tag}</button>
-          })
-        }
+
+        <button class=" my-3 py-2 px-5 shadow-md no-underline rounded-full bg-blue-500 text-white font-sans font-bold text-sm border-blue btn-primary hover:text-white hover:bg-blue-light focus:outline-none active:shadow-none mr-2">{props.tag}</button>
+        <p className="text-gray-900 font-semibold p-2 text-xs">*Directory0 is not a representative of this resource*</p>
       </div>
   
     );

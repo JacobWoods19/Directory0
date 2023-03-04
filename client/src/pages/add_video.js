@@ -19,16 +19,15 @@ class AddYTVideo extends React.Component{
         let title = document.getElementById("title").value;
         let url = document.getElementById("url").value;
         let description = document.getElementById("description").value;
-        let string_tags = document.getElementById("tags").value;
+        let tag= document.getElementById("tags").value;
         let channel = document.getElementById("channel").value;
-        let tags = string_tags.split(",");
         //upload to database
         async function addVideo() {
             let data_body = JSON.stringify({
                 title: title,
                 url: url,
                 description: description,
-                tags: tags,
+                tag: tag,
                 channel: channel,
             })
             console.log(data_body)
@@ -64,12 +63,6 @@ class AddYTVideo extends React.Component{
             <li class="mr-2">
                 <a href="/add_project" class="inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 ">Project</a>
             </li>
-            <li class="mr-2">
-                <a href="/add_blog" class="inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 ">Blog</a>
-            </li>
-            <li>
-                <a href="/add_book" class="inline-block p-4 text-gray-400 rounded-t-lg dark:text-gray-500">Book</a>
-            </li>
             <li>
                 <a href="/add_course" class="inline-block p-4 text-gray-400 rounded-t-lg dark:text-gray-500">Course</a>
             </li>
@@ -88,12 +81,8 @@ class AddYTVideo extends React.Component{
             <input type="url" id="url" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="https://youtu.be/dQw4w9WgXcQ"required></input>
         </div>
         <div class="mb-6">
-            <label for="description" class="block mb-2 text-sm font-medium text-gray-900">Video Description</label>
-            <input type="description" id="description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="A website for learning about computer science!"  required></input>
-        </div>
-        <div class="mb-6">
-            <label for="description" class="block mb-2 text-sm font-medium text-gray-900" >Video Tags (Comma Separated)</label>
-            <input type="description" id="tags" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="AI, Python, C++"required></input>
+            <label for="description" class="block mb-2 text-sm font-medium text-gray-900" >Topic</label>
+            <input type="description" id="tag" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="AI, Python, C++"required></input>
         </div>
         <div class="mb-6">
             <label for="channel" class="block mb-2 text-sm font-medium text-gray-900" >Channel</label>

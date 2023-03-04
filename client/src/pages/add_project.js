@@ -19,20 +19,18 @@ class AddProject extends React.Component{
         let title = document.getElementById("title").value;
         let url = document.getElementById("url").value;
         let description = document.getElementById("description").value;
-        let string_tags = document.getElementById("tags").value;
-        let channel = document.getElementById("channel").value;
-        let tags = string_tags.split(",");
+        let tag = document.getElementById("tag").value;
+    
         //upload to database
-        async function addWebsite() {
+        async function addProject() {
             let data_body = JSON.stringify({
                 name: title,
                 url: url,
                 description: description,
-                tags: tags,
-                channel: channel,
+                tag: tag
             })
             console.log(data_body)
-            const response = await fetch('http://localhost:8000/api/website', {
+            const response = await fetch('http://localhost:8000/api/projects', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -43,7 +41,7 @@ class AddProject extends React.Component{
             const data = await response.json();
             return data;
         }
-        addWebsite().then((data) => {
+        addProject().then((data) => {
             console.log(data);
             // window.location.href = "/search";
         }
@@ -59,16 +57,10 @@ class AddProject extends React.Component{
                 <a href="/add_website" class="inline-block p-4 rounded-t-lg">Website</a>
             </li>
             <li class="mr-2">
-                <a href="/add_video" class="inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50">YT Video</a>
-            </li>
-            <li class="mr-2">
                 <a href="/add_project" class="inline-block text-blue-600 bg-gray-100 p-4 rounded-t-lg hover:bg-gray-50 active ">Project</a>
             </li>
             <li class="mr-2">
-                <a href="/add_blog" class="inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 ">Blog</a>
-            </li>
-            <li>
-                <a href="/add_book" class="inline-block p-4 text-gray-400 rounded-t-lg dark:text-gray-500">Book</a>
+                <a href="/add_video" class="inline-block p-4 rounded-t-lg">YT Video</a>
             </li>
             <li>
                 <a href="/add_course" class="inline-block p-4 text-gray-400 rounded-t-lg dark:text-gray-500">Course</a>
@@ -92,8 +84,8 @@ class AddProject extends React.Component{
             <input type="text" id="description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "  rows="5" placeholder=" A Brief Description"  required></input>
         </div>
         <div class="mb-6">
-            <label for="description" class="block mb-2 text-sm font-medium text-gray-900" >Tags (Comma Separated)</label>
-            <input type="description" id="tags" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="AI, Python, C++"required></input>
+            <label for="description" class="block mb-2 text-sm font-medium text-gray-900" >Topic</label>
+            <input type="description" id="tag" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="AI, Python, C++"required></input>
         </div>
         
         <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
