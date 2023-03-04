@@ -2,7 +2,7 @@ import React from 'react';
 import NavBar from '../components/nav';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-class AddWebsite extends React.Component{
+class AddGeneral extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
@@ -32,7 +32,7 @@ class AddWebsite extends React.Component{
                 price: 0
             })
             console.log(data_body)
-            const response = await fetch('http://localhost:8000/api/website', {
+            const response = await fetch('http://localhost:8000/api/general', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -46,7 +46,7 @@ class AddWebsite extends React.Component{
                 document.getElementById("url").value = "";
                 document.getElementById("description").value = "";
                 document.getElementById("tag").value = "";
-                toast("Added Website! After review, it will be added to the site. Thank you!");
+                toast("Added General! After review, it will be added to the site. Thank you!");
             }
             else{
                 toast("Error adding. Please try again.");
@@ -74,9 +74,6 @@ class AddWebsite extends React.Component{
             
             <li class="mr-2">
                 <a href="/add_video" class="inline-block p-4 rounded-t-lg">YT Video</a>
-            </li>
-            <li class="mr-2">
-                <a href="/add_general" class="inline-block p-4 rounded-t-lg">General</a>
             </li>
             <li class="mr-2">
                 <a href="/add_project" class="inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 ">Project</a>
@@ -110,4 +107,4 @@ class AddWebsite extends React.Component{
        )
        }
 }
-export default AddWebsite;
+export default AddGeneral;

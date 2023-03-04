@@ -8,9 +8,8 @@ import NavBar from './components/nav';
 import AddWebsite from './pages/add_website';
 import AddYTVideo from './pages/add_video';
 import AddProject from './pages/add_project';
-import AddCourse from './pages/add_course';
 import AddCommunity from './pages/add_community';
-
+import AddGeneral from './pages/add_general';
 
 function App() {
   return (
@@ -23,8 +22,8 @@ function App() {
         <Route path="/add_website" element={<AddWebsite></AddWebsite>}></Route>
         <Route path="/add_video" element={<AddYTVideo></AddYTVideo>}></Route>
         <Route path="/add_project" element={<AddProject></AddProject>}></Route>
-        <Route path="/add_course" element={<AddCourse></AddCourse>}></Route>
         <Route path="/add_community" element={<AddCommunity></AddCommunity>}></Route>
+        <Route path="/add_general" element={<AddGeneral></AddGeneral>}></Route>
       
       </Routes>
 

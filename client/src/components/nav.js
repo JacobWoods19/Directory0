@@ -8,9 +8,11 @@ export default function NavBar (props) {
         <a href = "/"><img src="Logo.png" class="w-32 object-contain"></img></a>
         </div>
         <div class="flex items-center">
+        {props.showSubmit ? (
         <a class="bg-white text-slate-800  text-sm hover:bg-slate-400 font-bold py-2 px-4 rounded" href = "/add_website">
             Submit
         </a>
+        ) : null}
         </div>
         </div>
     )

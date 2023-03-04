@@ -18,7 +18,8 @@ class SearchPage extends React.Component {
             website_results: [],
             video_results: [],
             course_results: [],
-            project_results: []
+            project_results: [],
+            general_results: []
         };
   }
   loadSearchResults() {
@@ -35,13 +36,17 @@ class SearchPage extends React.Component {
       console.log(data)
       this.setState({video_results: data});
     });
-    getSearchResults('http://localhost:8000/api/courses').then((data) => {
+    getSearchResults('http://localhost:8000/api/courses/sorted').then((data) => {
       console.log(data)
       this.setState({course_results: data});
     });
-    getSearchResults('http://localhost:8000/api/projects').then((data) => {
+    getSearchResults('http://localhost:8000/api/projects/sorted').then((data) => {
       console.log(data)
       this.setState({project_results: data});
+    });
+    getSearchResults('http://localhost:8000/api/general').then((data) => {
+      console.log(data)
+      this.setState({general_results: data});
     });
 
   }
@@ -54,7 +59,7 @@ class SearchPage extends React.Component {
   render(){
     return (
         <div className="bg-gray-900">
-        <NavBar></NavBar>
+        <NavBar showSubmit= "true" ></NavBar>
           <div>
           <div class="grid place-items-center p-5">
             <Carousel showArrows={true} width = {"fill"} dynamicHeight={true}>
@@ -78,19 +83,23 @@ class SearchPage extends React.Component {
             <div className='p-5 flex-mx-auto'>
             <LanguageCards> </LanguageCards>
             </div>
-            <div className='p-5'> 
+            <div className='p-5'>
+                <h1 className='text-md py-3 font-bold text-white '>Great General Resources</h1>
+                <div className='grid grid-cols-1 gap-9 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
+                {this.state.general_results.map((result) => {
+                  return (<div className='py-2'><Card className ="my-5" title= {result.name} description = {result.description} url = {result.url} tag = {result.tag} upvotes = {result.upvotes}></Card></div>)
+                })}
+                </div>
                 <h1 className='text-md py-3 font-bold text-white '>Top Websites</h1>
                 {this.state.website_results.map((result) => {
                   return (<div className='py-2'><Card className ="my-5" title= {result.name} description = {result.description} url = {result.url} tag = {result.tag} upvotes = {result.upvotes}></Card></div>)
                 })}
-                <h1 className='text-md py-3 font-bold text-white '>Top Courses</h1>
-                {this.state.course_results.map((result) => {
-                  return (<div className='py-2'><Card className ="my-5" title= {result.name} description = {result.description} url = {result.url} tag = {result.tag} upvotes = {result.upvotes}></Card></div>)
-                })}
                 <h1 className='text-md py-3 font-bold text-white '>Top Projects</h1>
+                <div className='grid grid-cols-1 gap-9 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
                 {this.state.project_results.map((result) => {
                   return (<div className='py-2'><Card className ="my-5" title= {result.name} description = {result.description} url = {result.url} tag = {result.tag} upvotes = {result.upvotes}></Card></div>)
                 })}
+                </div>
                 <h1 className='text-md py-3 font-bold text-white '>Top Videos</h1>
                 <div className='grid grid-cols-1 gap-9 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-5'>
                 {this.state.video_results.map((result) => {

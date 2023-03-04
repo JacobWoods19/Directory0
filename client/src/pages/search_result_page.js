@@ -11,7 +11,8 @@ class SearchResultPage extends React.Component {
             search_term: "",
             website_results: [],
             video_results: [],
-            course_results: []
+            course_results: [],
+            project_results: []
         };
         
   }
@@ -41,6 +42,12 @@ class SearchResultPage extends React.Component {
 
       this.setState({course_results: data});
     });
+    getSearchResults('http://localhost:8000/api/projects/search').then((data) => {
+      console.log("Project Return Data: " + data)
+
+      this.setState({project_results: data});
+    });
+
   }
   componentDidMount() {
       const search_term = window.sessionStorage.getItem("search");  
@@ -50,8 +57,8 @@ class SearchResultPage extends React.Component {
   }
   render(){
     return (
-      <div className="bg-gray-900 h-screen">
-      <NavBar></NavBar>
+      <div className="bg-gray-900 min-h-screen">
+      <NavBar showSubmit= "true"></NavBar>
         <div>
           <h1 className='pt-5 px-5 font-bold text-md text-white'>Find the best resources for learning how to code!</h1>
           <Search></Search>
@@ -60,16 +67,18 @@ class SearchResultPage extends React.Component {
               {this.state.website_results.map((result) => {
                 return (<div className='py-2'><Card className ="my-5" title= {result.name} description = {result.description} url = {result.url} tag = {result.tag} upvotes = {result.upvotes}posted={result.publish_date} ></Card></div>)
               })}
-              <h1 className='text-md py-3 font-bold text-white '>{window.sessionStorage.getItem("search")}  Courses</h1>
-              {this.state.course_results.map((result) => {
-                return (<div className='py-2'><Card className ="my-5" title= {result.name} description = {result.description} url = {result.url} tag = {result.tag} upvotes = {result.upvotes} posted={result.publish_date}></Card></div>)
-              })}
+              <h1 className='text-md py-3 font-bold text-white '>{window.sessionStorage.getItem("search")}  Projects</h1>
+              <div className='grid grid-cols-1 gap-9 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
+              {this.state.project_results.map((result) => {
+                  return (<div className='py-2'><Card className ="my-5" title= {result.name} description = {result.description} url = {result.url} tag = {result.tag} upvotes = {result.upvotes} posted={result.publish_date}></Card></div>)
+                })}
+              </div>
               <h1 className='text-md py-3 font-bold text-white '>{window.sessionStorage.getItem("search")}  Videos</h1>
               <div className='grid grid-cols-1 gap-9 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
               {this.state.video_results.map((result) => {
                   return (<div className='py-2'><VideoCard className ="my-5" title= {result.title} description = {result.description} url = {result.url} tag = {result.tag} upvotes = {result.upvotes}></VideoCard></div>)
                 })}
-            </div>
+              </div>
           </div>
         </div>
     </div>

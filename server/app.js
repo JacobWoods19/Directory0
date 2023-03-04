@@ -51,7 +51,7 @@ async function run() {
             url: req.body.url,
             upvotes: 0,
             published_date: new Date(),
-            is_published: false,
+            is_published: true,
             tag: req.body.tag,
         };
         const website_exists = await client.db("sources").collection('websites').find({url: website.url}).toArray();
@@ -78,18 +78,20 @@ async function run() {
     app.get('/api/websites/search', async (req, res) => {
         var tag_input = req.query.tag;
         console.log("Search " + tag_input)
-        const results = await client.db("sources").collection('websites').find({tag: tag_input }).toArray()
+        var results = await client.db("sources").collection('websites').find({tag: tag_input }).sort({upvotes: -1}).toArray()
+        // limit the number of results to 10
+        results = results.slice(0, 7);
 
         res.json(results);
     });
     // add youtube video
     app.post("/api/youtube", jsonParser, async (req, res) => {
         // check req.body.name, req.body.description, req.body.url are not empty, or undefined
-        if (req.body.title == undefined || req.body.description == undefined || req.body.url == undefined || req.body.tag== undefined) {
+        if (req.body.title == undefined || req.body.url == undefined || req.body.tag== undefined) {
             res.json({message: "Missing required fields"}, 400);
             return;
         }
-        if (req.body.title == "" || req.body.description == "" || req.body.url == "" || req.body.tags == []) {
+        if (req.body.title == "" || req.body.url == "" || req.body.tags == []) {
             res.json({message: "Missing required fields"}, 400);
             return;
         }
@@ -105,7 +107,7 @@ async function run() {
             channel: req.body.channel,
             upvotes: 0,
             published_date: new Date(),
-            is_published: false,
+            is_published: true,
             tag: req.body.tag,
         };
         const youtube_exists = await client.db("sources").collection('videos').find({url: youtube.url}).toArray();
@@ -129,7 +131,8 @@ async function run() {
         res.json(results);
     });
     app.get('/api/videos/sorted', async (req, res) => {
-        const results = await client.db("sources").collection('videos').find().sort({upvotes: -1}).toArray()
+        var results = await client.db("sources").collection('videos').find().sort({upvotes: -1}).toArray()
+        results = results.slice(0, 10);
         res.json(results);
     });
     app.post("/api/course", jsonParser, async (req, res) => {
@@ -154,7 +157,7 @@ async function run() {
             url: req.body.url,
             upvotes: 0,
             published_date: new Date(),
-            is_published: false,
+            is_published: true,
             tag: req.body.tag,
         };
         const course_exists = await client.db("sources").collection('courses').find({url: course.url}).toArray();
@@ -172,7 +175,8 @@ async function run() {
     //course search
     app.get('/api/courses/search', async (req, res) => {
         const tag_input = req.query.tag;
-        const results = await client.db("sources").collection('courses').find({tag: tag_input}).toArray()
+        var results = await client.db("sources").collection('courses').find({tag: tag_input}).toArray()
+        results = results.slice(0, 7);
         res.json(results);
     });
     app.get('/api/courses/sorted', async (req, res) => {
@@ -200,7 +204,7 @@ async function run() {
             url: req.body.url,
             upvotes: 0,
             published_date: new Date(),
-            is_published: false,
+            is_published: true,
             tag: req.body.tag,
         };
         const project_exists = await client.db("sources").collection('projects').find({url: project.url}).toArray();
@@ -213,19 +217,59 @@ async function run() {
     });
     app.get('/api/projects', async (req, res) => {
         const results = await client.db("sources").collection('projects').find().toArray();
+
         res.json(results);
     });
     //project search
     app.get('/api/projects/search', async (req, res) => {
         const tag_input = req.query.tag;
-        const results = await client.db("sources").collection('projects').find({tags: tag_input}).toArray()
+        var results = await client.db("sources").collection('projects').find({tag: tag_input}).sort({upvotes: -1}).toArray()
+        results = results.slice(0, 7);
         res.json(results);
     });
     app.get('/api/projects/sorted', async (req, res) => {
-        const results = await client.db("sources").collection('projects').find().sort({upvotes: -1}).toArray()
+        var results = await client.db("sources").collection('projects').find().sort({upvotes: -1}).toArray()
+        results = results.slice(0, 7);
         res.json(results);
     });
 
+    app.get('/api/general', async (req, res) => {
+        const results = await client.db("sources").collection('general').find().toArray();
+        res.json(results);
+    });
+    app.post("/api/general", jsonParser, async (req, res) => {
+        // check req.body.name, req.body.description, req.body.url are not empty, or undefined
+        if (req.body.name == undefined || req.body.description == undefined || req.body.url == undefined || req.body.tag == undefined) {
+            res.json({message: "Missing required fields"}, 400);
+            return;
+        }
+        if (req.body.name == "" || req.body.description == "" || req.body.url == "" || req.body.tag == "") {
+            res.json({message: "Missing required fields"}, 400);
+            return;
+        }
+        // check if url is valid
+        if (!req.body.url.startsWith("http://") && !req.body.url.startsWith("https://")) {
+            res.json({message: "Invalid URL"}, 400);
+            return;
+        }
+        const general = {
+            name: req.body.name,
+            description: req.body.description,
+            url: req.body.url,
+            upvotes: 0,
+            published_date: new Date(),
+            is_published: true,
+            tag: req.body.tag,
+        };
+        const general_exists = await client.db("sources").collection('general').find({url: general.url}).toArray();
+        if (general_exists.length != 0) {
+            res.json({message: "Resource already exists in database"}, 400);
+            return;
+        }
+        const result = await client.db("sources").collection('general').insertOne(general);
+        res.json(result);
+    });
+    //general search
 
       
   
