@@ -68,6 +68,10 @@ class SearchPage extends React.Component {
                     <p className="legend">CS50</p>
                 </div>
                 <div>
+                    <img src="https://www.theodinproject.com/assets/og-logo-022832d4cefeec1d5266237be260192f5980f9bcbf1c9ca151b358f0ce1fd2df.png" />
+                    <p className="legend">Legend 3</p>
+                </div>
+                <div>
                     <img src="https://cdn-media-1.freecodecamp.org/images/0*oDbEFNhoM75KOnvF." />
                     <p className="legend p-5">Scratch</p>
                 </div>
@@ -84,23 +88,25 @@ class SearchPage extends React.Component {
             <LanguageCards> </LanguageCards>
             </div>
             <div className='p-5'>
-                <h1 className='text-md py-3 font-bold text-white '>Great General Resources</h1>
+                <div className='border shadow rounded-lg p-5'>
+                <h1 className='text-lg py-3 font-bold text-white '>Great General Resources</h1>
                 <div className='grid grid-cols-1 gap-9 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
                 {this.state.general_results.map((result) => {
                   return (<div className='py-2'><Card className ="my-5" title= {result.name} description = {result.description} url = {result.url} tag = {result.tag} upvotes = {result.upvotes}></Card></div>)
                 })}
                 </div>
-                <h1 className='text-md py-3 font-bold text-white '>Top Websites</h1>
+                </div>
+                <h1 className='text-lg py-3 font-bold text-white '>Top Websites</h1>
                 {this.state.website_results.map((result) => {
                   return (<div className='py-2'><Card className ="my-5" title= {result.name} description = {result.description} url = {result.url} tag = {result.tag} upvotes = {result.upvotes}></Card></div>)
                 })}
-                <h1 className='text-md py-3 font-bold text-white '>Top Projects</h1>
+                <h1 className='text-lg py-3 font-bold text-white '>Top Projects</h1>
                 <div className='grid grid-cols-1 gap-9 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
                 {this.state.project_results.map((result) => {
                   return (<div className='py-2'><Card className ="my-5" title= {result.name} description = {result.description} url = {result.url} tag = {result.tag} upvotes = {result.upvotes}></Card></div>)
                 })}
                 </div>
-                <h1 className='text-md py-3 font-bold text-white '>Top Videos</h1>
+                <h1 className='text-lg py-3 font-bold text-white '>Top Videos</h1>
                 <div className='grid grid-cols-1 gap-9 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-5'>
                 {this.state.video_results.map((result) => {
                     return (<div className='py-2'><VideoCard className ="my-5" title= {result.title} description = {result.description} url = {result.url} tag = {result.tag} upvotes = {result.upvotes}></VideoCard></div>)
