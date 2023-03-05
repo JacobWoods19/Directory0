@@ -2,14 +2,94 @@ import React, { useEffect } from 'react';
 
 function getFaviconFromUrl (url) {
   var url = new URL(url);
-  console.log(url.protocol + "//" + url.hostname + "/favicon.ico")
+  // console.log(url.protocol + "//" + url.hostname + "/favicon.ico")
   return url.protocol + "//" + url.hostname + "/favicon.ico";
 }
-export default function Card (props) {
-  useEffect(() => {
-    console.log(props);
 
+export default function Card (props) {
+  const[barColor, setBarColor] = React.useState("bg-blue-500");
+  const [upvotes, setUpvotes] = React.useState(props.upvotes);
+  const [hasUpvoted, setHasUpvoted] = React.useState(false);
+  const [hasBookmarked, setHasBookmarked] = React.useState(false);
+  useEffect(() => {
+    //check if user has upvoted this project
+    let upvotedProjects = JSON.parse(localStorage.getItem("upvotedProjects"));
+    if (upvotedProjects) {
+      if (upvotedProjects.includes(props.id) || hasUpvoted) {
+        setBarColor("bg-green-500");
+        setHasUpvoted(true);
+      }
+      else{
+        setBarColor("bg-blue-500");
+      }
+    }
+    //check if user has bookmarked this project
+    let bookmarkedProjects = JSON.parse(localStorage.getItem("bookmarkedProjects"));
+    if (bookmarkedProjects) {
+      if (bookmarkedProjects.includes(props.id) || hasBookmarked) {
+        setHasBookmarked(true);
+      }
+    }
   }, []);
+  //add upvotes prop to state and update it when upvote is clicked
+
+  async function upvote(user_id, id, type) {
+    console.log("TYPE IS: " + type)
+    const response = await fetch('http://localhost:8000/api/upvote', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user_id: user_id,
+        id: id,
+        type: type
+      })
+    });
+    if (response.status === 200) {
+      //APPEND LOCAL STORAGE UPVOTED PROJECTS
+      let upvotedProjects = JSON.parse(localStorage.getItem("upvotedProjects"))
+      if(upvotedProjects === null){
+        upvotedProjects = []
+      }
+      upvotedProjects.push(id)
+      localStorage.setItem("upvotedProjects", JSON.stringify(upvotedProjects))
+      //TODO: Change bar color to green
+      setBarColor("bg-green-500")
+      setUpvotes(upvotes + 1)
+      setHasUpvoted(true)
+      return true;
+    }
+    if(response.status === 400){
+      alert("You have already upvoted this project!")
+      return false;
+    }
+    else {
+      return false;
+    }
+  }
+  function addBookmark( id) {
+    // For now, just add to local storage
+    let bookmarkedProjects = JSON.parse(localStorage.getItem("bookmarkedProjects"))
+    if(bookmarkedProjects === null){
+      bookmarkedProjects = []
+    }
+    bookmarkedProjects.push(id)
+    localStorage.setItem("bookmarkedProjects", JSON.stringify(bookmarkedProjects))
+    setHasBookmarked(true)
+  }
+  function removeBookmark(id) {
+    // For now, just add to local storage
+    let bookmarkedProjects = JSON.parse(localStorage.getItem("bookmarkedProjects"))
+    if(bookmarkedProjects === null){
+      bookmarkedProjects = []
+    }
+    bookmarkedProjects = bookmarkedProjects.filter((project) => project !== id)
+    localStorage.setItem("bookmarkedProjects", JSON.stringify(bookmarkedProjects))
+    setHasBookmarked(false)
+  }
+
+
   return (
    
     <div class=" outline outline-slate-100 outline-2  rounded-lg shadow-lg bg-slate-800 hover:bg-slate-700  w-100">
@@ -29,20 +109,17 @@ export default function Card (props) {
   }}
 />   
                 <h1 class = "text-white font-semibold px-2">{props.title}</h1>
-                <h1 class = "text-white font-semibold px-2">{props.posted}</h1>
               </div>
               <h2 class = "text-slate-100  font-semibold text-sm sm:text-xs">{props.description}*</h2>
-              <p className="text-blue-500 font-semibold underline px-2 text-sm">{props.url.slice(0,30) + "..."}</p>
+              <p className="text-blue-500 font-semibold underline pt-3 text-sm">{props.url.slice(0,30) + "..."}</p>
               </a>
             </div>
           </div>
         </div>
 
-        <h1 class = "text-yellow-500 font-semibold p-5 text-md"> {props.upvotes}🥇</h1>
+        
         
       </div>
-
-      {props.price ? (<button class="mx-3 my-3 py-1 px-2 shadow-md no-underline rounded-full bg-blue-500 text-white font-sans font-semibold text-sm border-blue btn-primary hover:text-white hover:bg-blue-light focus:outline-none active:shadow-none mr-2"></button>) : (<button class="mx-3 my-3 py-1 px-2 shadow-md no-underline rounded-full bg-blue-500 text-white font-sans font-semibold text-sm border-blue btn-primary hover:text-white hover:bg-blue-light focus:outline-none active:shadow-none mr-2">Free</button> )}
 
  
       <button class="mx-3 my-3 py-1 px-2 shadow-md no-underline rounded-full bg-blue-500 text-white font-sans font-semibold text-sm border-blue btn-primary hover:text-white hover:bg-blue-light focus:outline-none active:shadow-none mr-2">{props.tag}</button>
@@ -50,7 +127,41 @@ export default function Card (props) {
 
       {/* <button class="mx-3 my-3 py-1 px-2 shadow-md no-underline rounded-full bg-blue-500 text-white font-sans font-semibold text-sm border-blue btn-primary hover:text-white hover:bg-blue-light focus:outline-none active:shadow-none mr-2">Machine Learning</button>
       <button class="mx-3 my-3 py-1 px-2 shadow-md no-underline rounded-full bg-blue-500 text-white font-sans font-semibold text-sm border-blue btn-primary hover:text-white hover:bg-blue-light focus:outline-none active:shadow-none mr-2">Python</button> */}
-    <p className="text-gray-900 font-semibold p-2 text-xs">*Directory0 is not a representative of this resource*</p>
+    <div id = "bottom-bar" className = {`flex justify-between cursor-pointer ${barColor}`} >
+    <h1 class = "text-white font-semibold text-sm cursor-pointer p-2" onClick = {() => {
+      if(props?.session?.data.session?.user){
+      if (!hasUpvoted) {
+        console.log(props.id)
+        upvote(props.session.data.session.user.id, props.id, props.type)
+
+      }
+      else {
+        alert("You have already upvoted this project!")
+      }
+    }
+    else {
+      window.location.href = "/login"
+    }
+    }}> {upvotes} Upvotes</h1>
+    <img src= {hasBookmarked ? "bookmark_fill.png" : "bookmark.png"} className = "w-8 cursor-pointer" onClick={
+      () => {
+        if(props?.session?.data.session?.user){
+        if (!hasBookmarked) {
+          addBookmark(props.id)
+          setHasBookmarked(true)
+        }
+        else {
+          removeBookmark(props.id)
+          setHasBookmarked(false)
+        }
+      }
+      else {
+        window.location.href = "/login"
+      }
+      }
+    } />
+    
+    </div>
     </div>
 
   );

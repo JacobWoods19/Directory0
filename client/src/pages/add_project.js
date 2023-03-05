@@ -16,6 +16,11 @@ class AddProject extends React.Component{
         this.formSubmit = this.formSubmit.bind(this);
 
     }
+    componentDidUpdate() {
+        if (!this.props.session){
+            window.location.href = "/login";
+        }
+    } 
     formSubmit(e) {
         e.preventDefault();
         let title = document.getElementById("title").value;
@@ -65,7 +70,6 @@ class AddProject extends React.Component{
        return(
         <div className='p-5 bg-gray-900 min-h-screen'>
             <ToastContainer />
-            <NavBar></NavBar>
             <h1 className='text-2xl py-3 font-bold text-white'>Add Project</h1>
         <ul class="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200">
             <li class="mr-2">

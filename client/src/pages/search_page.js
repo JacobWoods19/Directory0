@@ -29,37 +29,38 @@ class SearchPage extends React.Component {
       return data;
     }
     getSearchResults('http://localhost:8000/api/websites/sorted').then((data) => {
-      console.log(data)
+      // console.log(data)
       this.setState({website_results: data});
     });
     getSearchResults('http://localhost:8000/api/videos/sorted').then((data) => {
-      console.log(data)
+      // console.log(data)
       this.setState({video_results: data});
     });
     getSearchResults('http://localhost:8000/api/courses/sorted').then((data) => {
-      console.log(data)
+      // console.log(data)
       this.setState({course_results: data});
     });
     getSearchResults('http://localhost:8000/api/projects/sorted').then((data) => {
-      console.log(data)
+      // console.log(data)
       this.setState({project_results: data});
     });
     getSearchResults('http://localhost:8000/api/general').then((data) => {
-      console.log(data)
+      // console.log(data)
       this.setState({general_results: data});
     });
 
   }
+  componentDidRefresh(){
+
+    console.log("SESSION" + this.props.session)
+  }
   componentDidMount() {
-      const search_term = window.sessionStorage.getItem("search");  
-      console.log(search_term);
-      //call api and set state1
+
       this.loadSearchResults();
   }
   render(){
     return (
         <div className="bg-gray-900">
-        <NavBar showSubmit= "true" ></NavBar>
           <div>
           <div class="grid place-items-center p-5">
             <Carousel showArrows={true} width = {"fill"} dynamicHeight={true}>
@@ -92,18 +93,18 @@ class SearchPage extends React.Component {
                 <h1 className='text-lg py-3 font-bold text-white '>Great General Resources</h1>
                 <div className='grid grid-cols-1 gap-9 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
                 {this.state.general_results.map((result) => {
-                  return (<div className='py-2'><Card className ="my-5" title= {result.name} description = {result.description} url = {result.url} tag = {result.tag} upvotes = {result.upvotes}></Card></div>)
+                  return (<div className='py-2'><Card className ="my-5" title= {result.name} description = {result.description} url = {result.url} tag = {result.tag} upvotes = {result.upvotes} session= {this.props.session} id={result._id} type= "general"></Card></div>)
                 })}
                 </div>
                 </div>
                 <h1 className='text-lg py-3 font-bold text-white '>Top Websites</h1>
                 {this.state.website_results.map((result) => {
-                  return (<div className='py-2'><Card className ="my-5" title= {result.name} description = {result.description} url = {result.url} tag = {result.tag} upvotes = {result.upvotes}></Card></div>)
+                  return (<div className='py-2'><Card className ="my-5" title= {result.name} description = {result.description} url = {result.url} tag = {result.tag} upvotes = {result.upvotes} session= {this.props.session} id={result._id} type= "websites"></Card></div>)
                 })}
                 <h1 className='text-lg py-3 font-bold text-white '>Top Projects</h1>
                 <div className='grid grid-cols-1 gap-9 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
                 {this.state.project_results.map((result) => {
-                  return (<div className='py-2'><Card className ="my-5" title= {result.name} description = {result.description} url = {result.url} tag = {result.tag} upvotes = {result.upvotes}></Card></div>)
+                  return (<div className='py-2'><Card className ="my-5" title= {result.name} description = {result.description} url = {result.url} tag = {result.tag} upvotes = {result.upvotes} session= {this.props.session} id={result._id} type= "projects"></Card></div>)
                 })}
                 </div>
                 <h1 className='text-lg py-3 font-bold text-white '>Top Videos</h1>

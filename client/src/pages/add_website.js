@@ -15,6 +15,12 @@ class AddWebsite extends React.Component{
         this.formSubmit = this.formSubmit.bind(this);
 
     }
+    // on load of page, get all tags
+    componentDidUpdate() {
+        if (!this.props.session?.data?.session){
+            window.location.href = "/login";
+        }
+    } 
     formSubmit(e) {
         e.preventDefault();
         let title = document.getElementById("title").value;
@@ -65,7 +71,6 @@ class AddWebsite extends React.Component{
        return(
         <div className='p-5 bg-gray-900 min-h-screen'>
             <ToastContainer />
-            <NavBar></NavBar>
             <h1 className='text-2xl py-3 font-bold text-white'>Add Website</h1>
             <ul class="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200">
             <li class="mr-2">

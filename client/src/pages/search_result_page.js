@@ -61,7 +61,6 @@ class SearchResultPage extends React.Component {
   render(){
     return (
       <div className="bg-gray-900 min-h-screen">
-      <NavBar showSubmit= "true"></NavBar>
         <div>
           <h1 className='pt-5 px-5 font-bold text-md text-white'>Find the best resources for learning how to code!</h1>
           <Search></Search>

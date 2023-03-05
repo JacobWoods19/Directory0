@@ -15,8 +15,28 @@ class Search extends React.Component {
     runSearch(event){
         event.preventDefault();
         console.log("Search")
+        if (this.state.search_term == "html" || this.state.search_term == "HTML" || this.state.search_term == "Html") {
+            window.location.href = "/result";
+            window.sessionStorage.setItem("search", "HTML");
+            return;
+        }
+        if (this.state.search_term == "css" || this.state.search_term == "CSS" || this.state.search_term == "Css") {
+            window.location.href = "/result";
+            window.sessionStorage.setItem("search", "CSS");
+            return;
+        }
+        if (this.state.search_term =="php" || this.state.search_term == "PHP" || this.state.search_term == "Php") {
+            window.location.href = "/result";
+            window.sessionStorage.setItem("search", "PHP");
+            return;
+        }
+        // format string to be capitalized
+        var search_term = this.state.search_term;
+        search_term = search_term.toLowerCase();
+        search_term = search_term.charAt(0).toUpperCase() + search_term.slice(1);
         window.location.href = "/result";
-        window.sessionStorage.setItem("search", this.state.search_term);
+        window.sessionStorage.setItem("search", search_term);
+    
     }
     render(){
     return(
