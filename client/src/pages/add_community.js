@@ -15,7 +15,7 @@ class AddCommunity extends React.Component{
         };
         this.formSubmit = this.formSubmit.bind(this);
     }
-    componentDidMount() {
+    componentDidUpdate() {
         if (!this.props.session){
             window.location.href = "/login";
         }
@@ -25,20 +25,18 @@ class AddCommunity extends React.Component{
         let title = document.getElementById("title").value;
         let url = document.getElementById("url").value;
         let description = document.getElementById("description").value;
-        let string_tags = document.getElementById("tags").value;
-        let channel = document.getElementById("channel").value;
-        let tags = string_tags.split(",");
+        let tag = document.getElementById("tag").value;
+    
         //upload to database
         async function addWebsite() {
             let data_body = JSON.stringify({
                 name: title,
                 url: url,
                 description: description,
-                tags: tags,
-                channel: channel,
+                tag: tag,
             })
             console.log(data_body)
-            const response = await fetch('http://localhost:8000/api/community', {
+            const response = await fetch('http://localhost:8000/api/communities', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -103,7 +101,7 @@ class AddCommunity extends React.Component{
         </div>
         <div class="mb-6">
             <label for="description" class="block mb-2 text-sm font-medium text-white" >Topic</label>
-            <input type="description" id="tags" class="bg-slate-600 border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="AI, Python, C++"required></input>
+            <input type="description" id="tag" class="bg-slate-600 border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="AI, Python, C++"required></input>
         </div>
 
         

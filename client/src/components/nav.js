@@ -29,7 +29,8 @@ export default function NavBar (props) {
                     //refresh page
                     .then(()=> window.location.replace("/"))
                 }>
-                Logout </btn>) : (
+                Logout </btn>
+                ) : (
                     null)
             ) : 
             showSubmit ? (
@@ -38,6 +39,17 @@ export default function NavBar (props) {
             }>
             Login </btn>
             ) : (null)}
+            <btn className= 'bg-white text-slate-800 cursor-pointer text-sm hover:bg-slate-200 font-bold py-2 px-2  rounded' onClick= {()=> {
+                if(props?.session?.data.session?.user){
+                    window.location.href = "/saved"
+                }
+                else {
+                    window.location.href = "/login"
+                }
+            }}>
+                <img src= "bookmark_fill.png" className='w-5 h-5' ></img>
+            </btn>
+            
         </div>
         </div>
     )

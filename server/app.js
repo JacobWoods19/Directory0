@@ -30,11 +30,10 @@ async function run() {
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         next();
         });
-
         //general search
-        app.get('/api/search/:id', async (req, res) => {
-            console.log("searching for id: " + req.params.id);
-            const id = req.params.id;
+        app.get('/api/search/id', async (req, res) => {
+            console.log("searching for id: " + req.query.id);
+            var id = req.query.id;
             let result = null;
             let database = client.db("sources")
             try {
@@ -336,7 +335,46 @@ async function run() {
         results = results.slice(0, 7);
         res.json(results);
     });
-
+    app.post("/api/communities", jsonParser, async (req, res) => {
+        // check req.body.name, req.body.description, req.body.url are not empty, or undefined
+        if (req.body.name == undefined || req.body.description == undefined || req.body.url == undefined || req.body.tag == undefined) {
+            res.json({message: "Missing required fields"}, 400);
+            return;
+        }
+        if (req.body.name == "" || req.body.description == "" || req.body.url == "" || req.body.tag == "") {
+            res.json({message: "Missing required fields"}, 400);
+            return;
+        }
+        // check if url is valid
+        if (!req.body.url.startsWith("http://") && !req.body.url.startsWith("https://")) {
+            res.json({message: "Invalid URL"}, 400);
+            return;
+        }
+        const community = {
+            name: req.body.name,
+            description: req.body.description,
+            url: req.body.url,
+            upvotes: 0,
+            published_date: new Date(),
+            is_published: true,
+            tag: req.body.tag,
+        };
+        const community_exists = await client.db("sources").collection('communities').find({url: community.url}).toArray();
+        if (community_exists.length != 0) {
+            res.json({message: "Project already exists in database"}, 400);
+            return;
+        }
+        const result = await client.db("sources").collection('communities').insertOne(community);
+        res.json(result);
+    } );
+    app.get('/api/communities', async (req, res) => {
+        const results = await client.db("sources").collection('communities').find({tag: "starred"}).toArray();
+        res.json(results);
+    });
+    app.get('/api/communities/search', async (req, res) => {
+        const results = await client.db("sources").collection('communities').find({tag: req.query.tag}).toArray();
+        res.json(results);
+    });
     app.get('/api/general', async (req, res) => {
         const results = await client.db("sources").collection('general').find().toArray();
         res.json(results);

@@ -23,7 +23,6 @@ export default function VideoCard (props) {
         
 
         <div className = "">
-        <h1 class = "text-slate-200 font-semibold text-md"> {props.upvotes} Upvotes</h1>
         </div>
         <button class="my-3 py-2 px-5 shadow-md no-underline rounded-full bg-blue-500 text-white font-sans font-bold text-sm border-blue btn-primary hover:text-white hover:bg-blue-light focus:outline-none active:shadow-none mr-2">Free</button>
 

@@ -81,9 +81,6 @@ class AddWebsite extends React.Component{
                 <a href="/add_video" class="inline-block p-4 rounded-t-lg">YT Video</a>
             </li>
             <li class="mr-2">
-                <a href="/add_general" class="inline-block p-4 rounded-t-lg">General</a>
-            </li>
-            <li class="mr-2">
                 <a href="/add_project" class="inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 ">Project</a>
             </li>
             <li>

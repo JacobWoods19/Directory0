@@ -4,6 +4,7 @@ import NavBar from '../components/nav';
 import Search from '../components/search';
 import Card from '../components/card';
 import VideoCard from '../components/video_card';
+import CommunityCard from '../components/community_card';
 class SearchResultPage extends React.Component {
     constructor(props) { 
         super(props);
@@ -12,9 +13,9 @@ class SearchResultPage extends React.Component {
             website_results: [],
             video_results: [],
             course_results: [],
-            project_results: []
+            project_results: [],
+            community_results: []
         };
-        
   }
   loadSearchResults() {
     async function getSearchResults(url) {
@@ -29,23 +30,24 @@ class SearchResultPage extends React.Component {
       return data;
     }
     getSearchResults('http://localhost:8000/api/websites/search').then((data) => {
-      console.log("Web Return Data: " + data)
       this.setState({website_results: data});
     });
     getSearchResults('http://localhost:8000/api/videos/search').then((data) => {
-      console.log("Vid Return Data: " + data)
+
 
       this.setState({video_results: data});
     });
     getSearchResults('http://localhost:8000/api/courses/search').then((data) => {
-      console.log("Course Return Data: " + data)
+    
 
       this.setState({course_results: data});
     });
     getSearchResults('http://localhost:8000/api/projects/search').then((data) => {
-      console.log("Project Return Data: " + data)
 
       this.setState({project_results: data});
+    });
+    getSearchResults('http://localhost:8000/api/communities/search').then((data) => {
+      this.setState({community_results: data});
     });
 
   }
@@ -65,14 +67,20 @@ class SearchResultPage extends React.Component {
           <h1 className='pt-5 px-5 font-bold text-md text-white'>Find the best resources for learning how to code!</h1>
           <Search></Search>
           <div className='p-5'> 
+          <h1 className='text-md py-3 font-bold text-white '>{window.sessionStorage.getItem("search")}  Community</h1>
+              <div className='grid grid-cols-1 gap-9 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
+                {this.state.community_results.map((result) => {
+                  return (<div className='py-2'><CommunityCard className ="my-5" name= {result.name} description = {result.description} url = {result.url} tag = {result.tag} upvotes = {result.upvotes}></CommunityCard></div>)
+                })}
+              </div>
               <h1 className='text-md py-3 font-bold text-white '>{window.sessionStorage.getItem("search")} Websites</h1>
               {this.state.website_results.map((result) => {
-                return (<div className='py-2'><Card className ="my-5" title= {result.name} description = {result.description} url = {result.url} tag = {result.tag} upvotes = {result.upvotes}posted={result.publish_date} ></Card></div>)
+                return (<div className='py-2'><Card className ="my-5" title= {result.name} description = {result.description} url = {result.url} tag = {result.tag} upvotes = {result.upvotes}posted={result.publish_date} id={result._id} session= {this.props.session} type= "websites"></Card></div>)
               })}
               <h1 className='text-md py-3 font-bold text-white '>{window.sessionStorage.getItem("search")}  Projects</h1>
               <div className='grid grid-cols-1 gap-9 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
               {this.state.project_results.map((result) => {
-                  return (<div className='py-2'><Card className ="my-5" title= {result.name} description = {result.description} url = {result.url} tag = {result.tag} upvotes = {result.upvotes} posted={result.publish_date}></Card></div>)
+                  return (<div className='py-2'><Card className ="my-5" title= {result.name} description = {result.description} url = {result.url} tag = {result.tag} upvotes = {result.upvotes} posted={result.publish_date} id={result._id} type= "projects"></Card></div>)
                 })}
               </div>
               <h1 className='text-md py-3 font-bold text-white '>{window.sessionStorage.getItem("search")}  Videos</h1>
