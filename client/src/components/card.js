@@ -92,7 +92,7 @@ export default function Card (props) {
 
   return (
    
-    <div class=" outline outline-slate-100 outline-2  rounded-lg shadow-lg bg-slate-800 hover:bg-slate-700  w-100">
+    <div class="  outline outline-blue-500 outline-2 rounded shadow-lg bg-slate-800 hover:bg-slate-700  w-100">
       <div className= "flex justify-between">
         
         <div className='p-3'>

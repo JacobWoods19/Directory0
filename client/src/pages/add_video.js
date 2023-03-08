@@ -36,7 +36,7 @@ class AddYTVideo extends React.Component{
                 channel: channel,
             })
             console.log(data_body)
-            const response = await fetch('http://localhost:8000/api/youtube', {
+            const response = await fetch('http://localhost:8000/api/videos', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
