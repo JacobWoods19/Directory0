@@ -75,7 +75,7 @@ class SearchResultPage extends React.Component {
         <div>
           <h1 className='pt-5 px-5 font-bold text-md text-white'>Find the best resources for learning how to code!</h1>
           <Search></Search>
-          <NewButton></NewButton>
+          <NewButton is_new ={true} ></NewButton>
           <div className='p-5'>
           <div className='flex justify-between'>
             <h1 className='text-2xl py-3 font-bold text-white '> Top {window.sessionStorage.getItem("search")}  Resources</h1>
