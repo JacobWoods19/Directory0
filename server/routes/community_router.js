@@ -3,7 +3,7 @@ const { MongoClient, ObjectId } = require("mongodb");
 var router = express.Router();
 var bodyParser = require('body-parser')
 var jsonParser = bodyParser.json()
-    let client = new MongoClient("mongodb+srv://doadmin:6SK073Fneg2E189s@db-mongodb-nyc1-63759-f32d7869.mongo.ondigitalocean.com/admin?tls=true&authSource=admin&replicaSet=db-mongodb-nyc1-63759", {
+    let client = new MongoClient("mongodb+srv://doadmin:FG3hx582n9oH1b06@db-mongodb-nyc1-63759-f32d7869.mongo.ondigitalocean.com/admin?tls=true&authSource=admin&replicaSet=db-mongodb-nyc1-63759", {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     });
@@ -46,6 +46,11 @@ var jsonParser = bodyParser.json()
     });
     router.get('/search', async (req, res) => {
         const results = await client.db("sources").collection('communities').find({tag: req.query.tag}).toArray();
+        res.json(results);
+    });
+    // get newest posted communities given a search term
+    router.get('/newest', async (req, res) => {
+        const results = await client.db("sources").collection('communities').find({tag: req.query.tag}).sort({published_date: -1}).toArray();
         res.json(results);
     });
 

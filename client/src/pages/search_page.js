@@ -87,7 +87,7 @@ class SearchPage extends React.Component {
                 </div>
             </Carousel>
             </div>
-            <h1 className='pt-5 px-5 font-bold text-md text-white'>Search the best resources for learning how to code!</h1>
+            <h1 className='pt-5 px-5 font-bold text-2xl text-white'>Find the best free resources online for learning how to code!</h1>
             
             <Search></Search>
             <div className='p-5 flex-mx-auto'>

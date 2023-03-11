@@ -16,13 +16,13 @@ class SearchResultPage extends React.Component {
             course_results: [],
             project_results: [],
             community_results: [], 
-            info_result: {}
+            info_result: {},
+            info_card_bool: true,
         };
   }
   loadSearchResults() {
     async function getSearchResults(url) {
       const search_term = window.sessionStorage.getItem("search");
-    
       const response = await fetch(url + '?' + new URLSearchParams(
           {
               tag: search_term
@@ -48,7 +48,17 @@ class SearchResultPage extends React.Component {
       this.setState({community_results: data});
     });
     getSearchResults('http://localhost:8000/api/info/search').then((data) => {
-      this.setState({info_result: data});
+      try{
+      if (data[0]){
+        this.setState({info_result: data[0]});
+    }else{
+      this.setState({info_result: {language: "none" , image_url: "none", description: "none"}});
+      this.setState({info_card_bool: false});
+    }
+    }catch{
+      this.setState({info_result: {language: "none" , image_url: "none", description: "none"}});
+      this.setState({info_card_bool: false}); 
+    }
     });
 
   }
@@ -65,7 +75,8 @@ class SearchResultPage extends React.Component {
           <h1 className='pt-5 px-5 font-bold text-md text-white'>Find the best resources for learning how to code!</h1>
           <Search></Search>
           <div className='p-5'>
-          <LanguageCard language= {this.state.info_result.language} icon= {this.state.info_result.image_url} description = {this.state.info_result.description}></LanguageCard>
+          <h1 className='text-2xl py-3 font-bold text-white '> Top {window.sessionStorage.getItem("search")}  Resources</h1>
+          { this.state.info_card_bool ? <LanguageCard language= {this.state.info_result.language} icon= {this.state.info_result.image_url} description = {this.state.info_result.description}></LanguageCard> : null }
             <h1 className='text-md py-3 font-bold text-white '>{window.sessionStorage.getItem("search")}  Communities</h1>
               <div className='grid grid-cols-1 gap-9 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
                 {this.state.community_results.map((result) => {

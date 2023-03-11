@@ -26,6 +26,8 @@ export default function NavBar (props) {
                 showSubmit ? (
                 <btn class="bg-red-500 text-slate-800 cursor-pointer text-sm hover:bg-red-600 font-bold py-2 px-4 m-2 rounded " href = "/add_website" onClick = {()=> 
                     supabase.auth.signOut()
+                    //clear local storage
+                    .then(()=> localStorage.clear())
                     //refresh page
                     .then(()=> window.location.replace("/"))
                 }>

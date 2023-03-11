@@ -9,7 +9,7 @@ export default function LanguageCards (props) {
         <div><h1 className='pt-5 pb-5 font-bold text-md text-white'>Not sure where to start? Pick a language below</h1>
  
         <div class="grid grid-cols-2 gap-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
-        <LanguageCard language= "Python" icon= "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original-wordmark.svg" description = "General purpose language but most suited for machine learning, data analysis, and backend."></LanguageCard>
+        <LanguageCard language= "Python" icon= "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original-wordmark.svg" description = "A Python thing"></LanguageCard>
         <LanguageCard language= "Java" icon= "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original-wordmark.svg" description = "A class-based, object-oriented programming language that is commonly used for building enterprise-level applications."></LanguageCard>
         <LanguageCard language= "C++" icon= "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" description = "A general-purpose, high-performance programming language that is often used for developing system software, game engines, and other resource-intensive applications."></LanguageCard>
         <LanguageCard language= "C#" icon= "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" description = "A general-purpose, object-oriented programming language that is commonly used for developing web applications, desktop applications, and mobile applications."></LanguageCard> 
