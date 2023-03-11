@@ -57,5 +57,9 @@ var jsonParser = bodyParser.json()
         results = results.slice(0, 7);
         res.json(results);
     });
+    router.get('/search/new', async (req, res) => {
+        const results = await client.db("sources").collection('projects').find({tag: req.query.tag}).sort({published_date: -1}).toArray();
+        res.json(results);
+    });
 
 module.exports = router;

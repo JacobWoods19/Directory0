@@ -14,6 +14,7 @@ import { useEffect, useState } from 'react';
 import { supabase } from './supabaseClient';
 import Saved from './pages/saved';
 import Footer from './components/footer';
+import SearchNewPage from './pages/search_new';
 function App() {
   const [session, setSession] = useState(null);
   useEffect(() => {
@@ -45,6 +46,8 @@ function App() {
         <Route path="/add_community" element={<AddCommunity session = {session}></AddCommunity>}></Route>
         <Route path="/saved" element={<Saved session = {session}></Saved>}></Route>
         <Route path="/login" element={<Login session = {session}></Login>}></Route>
+        <Route path="/new" element={<SearchNewPage></SearchNewPage>}></Route>
+        <Route path="*" element={<Navigate to="/" />}></Route>
       </Routes>
 
     </BrowserRouter>

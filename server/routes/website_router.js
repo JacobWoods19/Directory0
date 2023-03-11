@@ -53,13 +53,26 @@ var jsonParser = bodyParser.json()
         res.json(results);
     });
     //Search by tag name , checks if tag name is in the tags array of document
-    router.get('/search', async (req, res) => {
-        var tag_input = req.query.tag;
-        console.log("Search " + tag_input)
-        var results = await client.db("sources").collection('websites').find({tag: tag_input }).sort({upvotes: -1}).toArray()
-        // limit the number of results to 10
-        results = results.slice(0, 7);
-        res.json(results);
-    });
+    router.get('/search/new', async (req, res) => {
+        const limit = parseInt(req.query.limit) || 10; // default limit to 10 if not specified
+        const page = parseInt(req.query.page) || 1; // default page to 1 if not specified
+        const skip = (page - 1) * limit;
+      
+        const query = { tag: req.query.tag };
+        const count = await client.db("sources").collection('websites').countDocuments(query);
+        const totalPages = Math.ceil(count / limit);
+      
+        const results = await client.db("sources").collection('websites')
+          .find(query)
+          .sort({ published_date: -1 })
+          .skip(skip)
+          .limit(limit)
+          .toArray();
+      
+        res.json({ results, totalPages });
+      });
+
+
+    
 
 module.exports = router;

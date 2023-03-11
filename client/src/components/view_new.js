@@ -8,15 +8,11 @@ class NewButton extends React.Component{
     }
     onUpdate = () => {
         if (this.props.is_new){
-            document.getElementById("new").classList.add("bg-blues-900");
-            document.getElementById("new").classList.remove("bg-slate-700");
+            document.getElementById("new").classList.add("bg-blue-500");
             
 
         } else {
-            document.getElementById("new").classList.add("bg-gray-900");
-            document.getElementById("new").classList.remove("bg-slate-700");
-            document.getElementById("top").classList.add("bg-blue-500");
-            document.getElementById("top").classList.remove("bg-gray-900");
+            document.getElementById("new").classList.add("bg--900");
         }
     }
     handleClick = () => {
@@ -26,13 +22,35 @@ class NewButton extends React.Component{
         return(
             <div className="grid place-items-center">
             <div className="flex inline-flex">
-            <div  id= "top" class=" p-2 bg-slate-700 text-white font-bold text-xs cursor-pointer" onClick={this.handleClick}>
+            { 
+                this.props.is_new ?
+            <div  id= "top" class=" p-2 bg-slate-700 text-white font-bold text-xs cursor-pointer" onClick={() =>
+                window.location.href = "/result"
+            }>
                 Top
             </div>
-            { }
-            <div id= "new" class=" p-2 bg-blue-500 text-white font-bold text-xs cursor-pointer" onClick={this.handleClick}>
+            :
+            <div id= "top" class=" p-2 text-white bg-blue-500 font-bold text-xs" onClick={() =>
+                window.location.href = "/result"
+            }>
+                Top
+            </div>
+            }
+        
+            {
+                this.props.is_new ?
+            <div id= "new" class=" p-2 text-white bg-blue-500 font-bold text-xs" onClick={() =>
+                window.location.href = "/new"
+            }>
                 New
             </div>
+            :
+            <div id= "new" class=" p-2 bg-slate-700 text-white font-bold text-xs cursor-pointer" onClick={() =>
+                window.location.href = "/new"
+            }>
+                New
+            </div>
+            }
             </div>
             </div>
         )
