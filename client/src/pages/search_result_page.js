@@ -6,6 +6,7 @@ import Card from '../components/card';
 import VideoCard from '../components/video_card';
 import CommunityCard from '../components/community_card';
 import LanguageCard from '../components/language_card';
+import NewButton from '../components/view_new';
 class SearchResultPage extends React.Component {
     constructor(props) { 
         super(props);
@@ -74,8 +75,11 @@ class SearchResultPage extends React.Component {
         <div>
           <h1 className='pt-5 px-5 font-bold text-md text-white'>Find the best resources for learning how to code!</h1>
           <Search></Search>
+          <NewButton></NewButton>
           <div className='p-5'>
-          <h1 className='text-2xl py-3 font-bold text-white '> Top {window.sessionStorage.getItem("search")}  Resources</h1>
+          <div className='flex justify-between'>
+            <h1 className='text-2xl py-3 font-bold text-white '> Top {window.sessionStorage.getItem("search")}  Resources</h1>
+          </div>
           { this.state.info_card_bool ? <LanguageCard language= {this.state.info_result.language} icon= {this.state.info_result.image_url} description = {this.state.info_result.description}></LanguageCard> : null }
             <h1 className='text-md py-3 font-bold text-white '>{window.sessionStorage.getItem("search")}  Communities</h1>
               <div className='grid grid-cols-1 gap-9 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>

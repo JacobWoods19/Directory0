@@ -1,27 +1,27 @@
 import React from "react";
 import { useState } from "react";
-class LanguageCard extends React.Component{
+class NewButton extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            language: props.language,
-            icon: props.icon,
-            description: props.description,
         }
     }
     handleClick = () => {
-        window.sessionStorage.setItem("search", this.state.language);
-        window.location.href = "/result";
+        window.location.href = "/new";
     }
     render (){
         return(
-            
-            <div class="border bg-slate-700 language_card rounded-md p-4 hover:bg-slate-600 cursor-pointer" onClick={this.handleClick}>
-                
+            <div className="grid place-items-center">
+            <div className="flex inline-flex">
+            <div class=" p-2 bg-slate-700 text-white font-bold text-xs" onClick={this.handleClick}>
+                Top
             </div>
-
-        
+            <div class=" p-2 bg-slate-700 text-white font-bold text-xs" onClick={this.handleClick}>
+                New
+            </div>
+            </div>
+            </div>
         )
     }
-
 }
+export default  NewButton;
