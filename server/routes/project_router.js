@@ -58,8 +58,21 @@ var jsonParser = bodyParser.json()
         res.json(results);
     });
     router.get('/search/new', async (req, res) => {
-        const results = await client.db("sources").collection('projects').find({tag: req.query.tag}).sort({published_date: -1}).toArray();
-        res.json(results);
-    });
+        const limit = parseInt(req.query.limit) || 10; // default limit to 10 if not specified
+        const page = parseInt(req.query.page) || 1; // default page to 1 if not specified
+        const skip = (page - 1) * limit;
+      
+        const query = { tag: req.query.tag };
+        const count = await client.db("sources").collection('projects').countDocuments(query);
+      
+        const results = await client.db("sources").collection('projects')
+          .find(query)
+          .sort({ published_date: -1 })
+          .skip(skip)
+          .limit(limit)
+          .toArray();
+      
+        res.json({ results});
+      });
 
 module.exports = router;

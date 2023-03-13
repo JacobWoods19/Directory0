@@ -60,7 +60,6 @@ var jsonParser = bodyParser.json()
       
         const query = { tag: req.query.tag };
         const count = await client.db("sources").collection('websites').countDocuments(query);
-        const totalPages = Math.ceil(count / limit);
       
         const results = await client.db("sources").collection('websites')
           .find(query)
@@ -69,7 +68,7 @@ var jsonParser = bodyParser.json()
           .limit(limit)
           .toArray();
       
-        res.json({ results, totalPages });
+        res.json({ results});
       });
 
 

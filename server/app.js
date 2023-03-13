@@ -140,7 +140,9 @@ async function run() {
     } 
     });
         
-
+    app.get('/ping', (req, res) => {
+        res.send('pong');
+    });
     app.get('/api/general', async (req, res) => {
         const results = await client.db("sources").collection('general').find().toArray();
         res.json(results);
