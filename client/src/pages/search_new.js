@@ -30,7 +30,7 @@ class SearchNewPage extends React.Component {
       const response = await fetch(url + '?' + new URLSearchParams(
           {
               tag: search_term,
-              limit: 1
+              limit: 6
           }
       ));
       const data = await response.json();
@@ -45,6 +45,7 @@ class SearchNewPage extends React.Component {
     // });
     getSearchResults('http://localhost:8000/api/projects/search/new').then((data) => {
       console.log(data)
+      this.setState({project_pages: this.state.project_pages + 1})
       this.setState({project_results: data.results});
     });
     getSearchResults('http://localhost:8000/api/communities/search/new').then((data) => {
@@ -81,26 +82,36 @@ class SearchNewPage extends React.Component {
     }
     getSearchResults('http://localhost:8000/api/websites/search/new', this.state.website_pages + 1).then((data) => {
       console.log("Web data " + data)
+      //if data is empty, then we have reached the end of the results
+      if (data.results.length == 0){
+        alert("No more results")
+        return;
+      }
       this.setState({website_results: this.state.website_results.concat(data.results)});
       this.setState({website_pages: this.state.website_pages + 1});
     });
   }
   loadMoreProjects() {
-    console.log("load more websites")
+    console.log("load more projects")
     async function getSearchResults(url, page) {
       const search_term = window.sessionStorage.getItem("search");
       const response = await fetch(url + '?' + new URLSearchParams(
           {
               tag: search_term,
               page: page,
-              limit: 1
+              limit: 3
           }
       ));
       const data = await response.json();
       return data;
     }
-    getSearchResults('http://localhost:8000/api/projects/search/new', this.state.website_pages + 1).then((data) => {
-      console.log("Web data " + data)
+    getSearchResults('http://localhost:8000/api/projects/search/new', this.state.project_pages).then((data) => {
+      console.log("Project data " + data)
+      //if data is empty, then we have reached the end of the results
+      if (data.results.length == 0){
+        alert("No more results")
+        return;
+      }
       this.setState({project_results: this.state.project_results.concat(data.results)});
       this.setState({project_pages: this.state.project_pages + 1 });
     });
@@ -134,8 +145,7 @@ class SearchNewPage extends React.Component {
               {this.state.website_results.map((result) => {
                 return (<div className='py-2'><Card className ="my-5" title= {result.name} description = {result.description} url = {result.url} tag = {result.tag} upvotes = {result.upvotes}posted={result.publish_date} id={result._id} session= {this.props.session} type= "websites"></Card></div>)
               })}
-              <button  class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onClick={ ()=>
-
+              <button  class="text-white bg-slate-600 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 my-2" onClick={ ()=>
                 this.loadMoreWebsites(this.state.website_pages)
                 }>Load More</button>
               <h1 className='text-md py-3 font-bold text-white '>{window.sessionStorage.getItem("search")}  Projects</h1>
@@ -144,7 +154,7 @@ class SearchNewPage extends React.Component {
                   return (<div className='py-2'><Card className ="my-5" title= {result.name} description = {result.description} url = {result.url} tag = {result.tag} upvotes = {result.upvotes} posted={result.publish_date} id={result._id} type= "projects"></Card></div>)
                 })}
               </div>
-              <button  class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onClick={ ()=>
+              <button  class="text-white bg-slate-600 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 my-2" onClick={ ()=>
                 this.loadMoreProjects(this.state.project_pages)
               }>Load More</button>
               <h1 className='text-md py-3 font-bold text-white '>{window.sessionStorage.getItem("search")}  Videos</h1>
