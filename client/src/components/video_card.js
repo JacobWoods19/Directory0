@@ -19,7 +19,7 @@ export default function VideoCard (props) {
         <img src = {`https://img.youtube.com/vi/${id}/mqdefault.jpg`} className='w-full rounded-lg shadow-lg'></img>
         <h1 class="text-lg font-bold text-slate-50 pt-5">{props.title}</h1>
         <a href= {props.url} className="text-blue-500 font-semibold underline text-sm">Link</a>
-        <p class="text-md font-semibold  text-slate-200">{props.description}</p>
+        <p class="text-md font-semibold  text-slate-200">{props.channel}</p>
         
 
         <div className = "">

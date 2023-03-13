@@ -9,6 +9,7 @@ var jsonParser = bodyParser.json()
     });
     //insert website into database
     router.post("/", jsonParser, async (req, res) => {
+        try{
         // check req.body.name, req.body.description, req.body.url are not empty, or undefined
         if (req.body.name == undefined || req.body.description == undefined || req.body.url == undefined || req.body.tag == undefined) { 
             res.json({message: "Missing required fields"}, 400);
@@ -39,21 +40,39 @@ var jsonParser = bodyParser.json()
         }
         const result = await client.db("sources").collection('websites').insertOne(website);
         res.json(result);
+    } catch (err) {
+        console.log(err);
+        res.json({message: "Internal server error"}, 500);
+    }
     });
     //get all websites... sort by upvotes
     router.get('/', async (req, res) => {
+        try{
         const results = await client.db("sources").collection('websites').find().toArray();
         res.json(results);
+        }
+        catch(err){
+            console.log(err);
+            res.json({message: "Internal server error"}, 500);
+        }
     });
     //get all websites... sort by upvotes
     router.get('/sorted', async (req, res) => {
+        try{
         var results = await client.db("sources").collection('websites').find().sort({upvotes: -1}).toArray()
         // limit the number of results to 10 
         results = results.slice(0, 7);
         res.json(results);
+        }
+        catch(err){
+            console.log(err);
+            res.json({message: "Internal server error"}, 500);
+        }
+
     });
     //Search by tag name , checks if tag name is in the tags array of document
     router.get('/search/new', async (req, res) => {
+        try{
         const limit = parseInt(req.query.limit) || 10; // default limit to 10 if not specified
         const page = parseInt(req.query.page) || 1; // default page to 1 if not specified
         const skip = (page - 1) * limit;
@@ -68,7 +87,17 @@ var jsonParser = bodyParser.json()
           .limit(limit)
           .toArray();
       
+<<<<<<< Updated upstream
         res.json({ results});
+=======
+        res.json({ results, totalPages });
+        }
+        catch(err){
+            console.log(err);
+            res.json({message: "Internal server error"}, 500);
+        }
+        
+>>>>>>> Stashed changes
       });
 
 

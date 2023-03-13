@@ -9,6 +9,7 @@ var jsonParser = bodyParser.json()
     });
     //insert website into database
     router.post("/", jsonParser, async (req, res) => {
+        try{
         // check req.body.name, req.body.description, req.body.url are not empty, or undefined
         if (req.body.language == undefined || req.body.description == undefined || req.body.image_url == undefined)  { 
             res.json({message: "Missing required fields"}, 400);
@@ -30,8 +31,13 @@ var jsonParser = bodyParser.json()
         }
         const result = await client.db("sources").collection('information').insertOne(info);
         res.json(result);
+    } catch (err) {
+        console.log(err);
+        res.json({message: "Internal server error"}, 500);
+    }
     });
     router.get('/search', async (req, res) => {
+        try{
         var language = req.query.tag;
         var results = await client.db("sources").collection('information').find({language : language }).sort({upvotes: -1}).toArray()
         if (results.length == 0) {
@@ -39,6 +45,11 @@ var jsonParser = bodyParser.json()
             return;
         }
         res.json(results);
+    }
+    catch (err) {
+        console.log(err);
+        res.json({message: "Internal server error"}, 500);
+    }   
     });
 
 module.exports = router;
