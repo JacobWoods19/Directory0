@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 
-function getFaviconFromUrl (url) {
+function getFaviconFromUrl(url) {
   var url = new URL(url);
   // console.log(url.protocol + "//" + url.hostname + "/favicon.ico")
   return url.protocol + "//" + url.hostname + "/favicon.ico";
 }
 
-export default function Card (props) {
-  const[barColor, setBarColor] = React.useState("bg-blue-500");
+export default function Card(props) {
+  const [barColor, setBarColor] = React.useState("bg-blue-500");
   const [upvotes, setUpvotes] = React.useState(props.upvotes);
   const [hasUpvoted, setHasUpvoted] = React.useState(false);
   const [hasBookmarked, setHasBookmarked] = React.useState(false);
@@ -19,7 +19,7 @@ export default function Card (props) {
         setBarColor("bg-green-500");
         setHasUpvoted(true);
       }
-      else{
+      else {
         setBarColor("bg-blue-500");
       }
     }
@@ -49,7 +49,7 @@ export default function Card (props) {
     if (response.status === 200) {
       //APPEND LOCAL STORAGE UPVOTED PROJECTS
       let upvotedProjects = JSON.parse(localStorage.getItem("upvotedProjects"))
-      if(upvotedProjects === null){
+      if (upvotedProjects === null) {
         upvotedProjects = []
       }
       upvotedProjects.push(id)
@@ -60,7 +60,7 @@ export default function Card (props) {
       setHasUpvoted(true)
       return true;
     }
-    if(response.status === 400){
+    if (response.status === 400) {
       alert("You have already upvoted this project!")
       return false;
     }
@@ -83,7 +83,7 @@ export default function Card (props) {
     if (response.status === 200) {
       // Remove from local storage
       let upvotedProjects = JSON.parse(localStorage.getItem("upvotedProjects"))
-      if(upvotedProjects === null){
+      if (upvotedProjects === null) {
         upvotedProjects = []
       }
       upvotedProjects = upvotedProjects.filter((project) => project !== id)
@@ -93,7 +93,7 @@ export default function Card (props) {
       setHasUpvoted(false)
       return true;
     }
-    if(response.status === 400){
+    if (response.status === 400) {
       alert("Downvote failed!")
       return false;
     }
@@ -103,7 +103,7 @@ export default function Card (props) {
   }
   function addBookmarkToDatabase(id) {
     alert("Bookmark working on it!")
-    async function add(){
+    async function add() {
       const response = await fetch('http://localhost:8000/api/bookmarked', {
         method: 'POST',
         headers: {
@@ -119,7 +119,7 @@ export default function Card (props) {
         alert("Bookmark added!")
         return true;
       }
-      if(response.status === 400){
+      if (response.status === 400) {
         alert("Bookmark failed!")
         return false;
       }
@@ -128,11 +128,11 @@ export default function Card (props) {
       }
     }
     add();
-      
-    }
+
+  }
   function removeBookmarkFromDatabase(id) {
     alert("Bookmark working on it!")
-    async function remove(){
+    async function remove() {
       const response = await fetch('http://localhost:8000/api/bookmarked/remove', {
         method: 'POST',
         headers: {
@@ -148,7 +148,7 @@ export default function Card (props) {
         alert("Bookmark removed!")
         return true;
       }
-      if(response.status === 400){
+      if (response.status === 400) {
         alert("Bookmark failed!")
         return false;
       }
@@ -159,23 +159,23 @@ export default function Card (props) {
     remove();
 
   }
-  
+
   function addBookmark(id) {
     // For now, just add to local storage
     let bookmarkedProjects = JSON.parse(localStorage.getItem("bookmarkedProjects"))
-    if(bookmarkedProjects === null){
+    if (bookmarkedProjects === null) {
       bookmarkedProjects = []
     }
     bookmarkedProjects.push(id)
     localStorage.setItem("bookmarkedProjects", JSON.stringify(bookmarkedProjects))
     // add to database
-    
+
     setHasBookmarked(true)
   }
   function removeBookmark(id) {
     // For now, just add to local storage
     let bookmarkedProjects = JSON.parse(localStorage.getItem("bookmarkedProjects"))
-    if(bookmarkedProjects === null){
+    if (bookmarkedProjects === null) {
       bookmarkedProjects = []
     }
     bookmarkedProjects = bookmarkedProjects.filter((project) => project !== id)
@@ -185,37 +185,37 @@ export default function Card (props) {
 
 
   return (
-   
+
     <div class="  outline outline-blue-500 outline-2 rounded shadow-lg bg-slate-800 hover:bg-slate-700  w-100">
-      <div className= "flex justify-between">
-        
+      <div className="flex justify-between">
+
         <div className='p-3'>
           <div className='flex'>
-          <div className = "flex justify-center items-center">
-          
-          </div>
+            <div className="flex justify-center items-center">
+
+            </div>
             <div>
-              <a href= {props.url}>
-              <div className='inline-flex '>        
-              <img src={getFaviconFromUrl(props.url)} className = "w-6 h-6" onError={({ currentTarget }) => {
-              currentTarget.onerror = null; 
-              currentTarget.src="defaulcon.png";
-  }}
-/>   
-                <h1 class = "text-white font-semibold px-2">{props.title}</h1>
-              </div>
-              <h2 class = "text-slate-100  font-semibold text-sm sm:text-xs">{props.description}*</h2>
-              <p className="text-blue-500 font-semibold underline pt-3 text-sm">{props.url.slice(0,30) + "..."}</p>
+              <a href={props.url}>
+                <div className='inline-flex '>
+                  <img src={getFaviconFromUrl(props.url)} className="w-6 h-6" onError={({ currentTarget }) => {
+                    currentTarget.onerror = null;
+                    currentTarget.src = "defaulcon.png";
+                  }}
+                  />
+                  <h1 class="text-white font-semibold px-2">{props.title}</h1>
+                </div>
+                <h2 class="text-slate-100  font-semibold text-sm sm:text-xs">{props.description}*</h2>
+                <p className="text-blue-500 font-semibold underline pt-3 text-sm">{props.url.slice(0, 30) + "..."}</p>
               </a>
             </div>
           </div>
         </div>
 
-        
-        
+
+
       </div>
 
- 
+
       <button class="mx-3 my-3 py-1 px-2 shadow-md no-underline rounded-full bg-blue-500 text-white font-sans font-semibold text-sm border-blue btn-primary hover:text-white hover:bg-blue-light focus:outline-none active:shadow-none mr-2" onClick={
         () => {
           window.sessionStorage.setItem("search", props.tag);
@@ -226,40 +226,40 @@ export default function Card (props) {
 
       {/* <button class="mx-3 my-3 py-1 px-2 shadow-md no-underline rounded-full bg-blue-500 text-white font-sans font-semibold text-sm border-blue btn-primary hover:text-white hover:bg-blue-light focus:outline-none active:shadow-none mr-2">Machine Learning</button>
       <button class="mx-3 my-3 py-1 px-2 shadow-md no-underline rounded-full bg-blue-500 text-white font-sans font-semibold text-sm border-blue btn-primary hover:text-white hover:bg-blue-light focus:outline-none active:shadow-none mr-2">Python</button> */}
-    <div id = "bottom-bar" className = {`flex justify-between cursor-pointer ${barColor}`} >
-    <h1 class = "text-white font-semibold text-sm cursor-pointer p-2" onClick = {() => {
-      if(props?.session?.data.session?.user){
-      if (!hasUpvoted) {
-        console.log(props.id)
-        upvote(props.session.data.session.user.id, props.id, props.type)
-      }
-      else {
-        downvote(props.session.data.session.user.id, props.id, props.type)
-      }
-    }
-    else {
-      window.location.href = "/login"
-    }
-    }}> {upvotes} Upvotes</h1>
-    <img src= {hasBookmarked ? "bookmark_fill.png" : "bookmark.png"} className = "w-8 cursor-pointer" onClick={
-      () => {
-        if(props?.session?.data.session?.user){
-        if (!hasBookmarked) {
-          addBookmarkToDatabase(props.id)
-          setHasBookmarked(true)
-        }
-        else {
-          removeBookmarkFromDatabase(props.id)
-          setHasBookmarked(false)
-        }
-      }
-      else {
-        window.location.href = "/login"
-      }
-      }
-    } />
-    
-    </div>
+      <div id="bottom-bar" className={`flex justify-between cursor-pointer ${barColor}`} >
+        <h1 class="text-white font-semibold text-sm cursor-pointer p-2" onClick={() => {
+          if (props?.session?.data.session?.user) {
+            if (!hasUpvoted) {
+              console.log(props.id)
+              upvote(props.session.data.session.user.id, props.id, props.type)
+            }
+            else {
+              downvote(props.session.data.session.user.id, props.id, props.type)
+            }
+          }
+          else {
+            window.location.href = "/login"
+          }
+        }}> {upvotes} Upvotes</h1>
+        <img src={hasBookmarked ? "bookmark_fill.png" : "bookmark.png"} className="w-8 cursor-pointer" onClick={
+          () => {
+            if (props?.session?.data.session?.user) {
+              if (!hasBookmarked) {
+                addBookmarkToDatabase(props.id)
+                setHasBookmarked(true)
+              }
+              else {
+                removeBookmarkFromDatabase(props.id)
+                setHasBookmarked(false)
+              }
+            }
+            else {
+              window.location.href = "/login"
+            }
+          }
+        } />
+
+      </div>
     </div>
 
   );
