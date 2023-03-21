@@ -12,16 +12,13 @@ var infoRouter = require('./routes/info_router');
 const port = 8000;
 var bodyParser = require('body-parser')
 var jsonParser = bodyParser.json()
-//mongodb+srv://doadmin:6SK073Fneg2E189s@db-mongodb-nyc1-63759-f32d7869.mongo.ondigitalocean.com/admin?tls=true&authSource=admin&replicaSet=db-mongodb-nyc1-63759
-//mongodb+srv://doadmin:FG3hx582n9oH1b06@db-mongodb-nyc1-63759-f32d7869.mongo.ondigitalocean.com/admin?tls=true&authSource=admin&replicaSet=db-mongodb-nyc1-63759
+
 let client = new MongoClient("mongodb+srv://doadmin:FG3hx582n9oH1b06@db-mongodb-nyc1-63759-f32d7869.mongo.ondigitalocean.com/admin?tls=true&authSource=admin&replicaSet=db-mongodb-nyc1-63759", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
 const supabase = createClient('https://qqfktkpxbhnruikwfzbp.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFxZmt0a3B4YmhucnVpa3dmemJwIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY3NzE4MTc3NywiZXhwIjoxOTkyNzU3Nzc3fQ.g5y_kJZFNcKP9-VeBcSKADMX4G86vFlOMedCUuoi-gY')
-// app.use(cors({
-//     origin: 'http://example.com'
-//   }));
+
 async function run() {
 
     await client.connect();
