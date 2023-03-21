@@ -11,6 +11,7 @@ var jsonParser = bodyParser.json()
 
     // add youtube video
     router.post("/", jsonParser, async (req, res) => {
+        try{
         // check req.body.name, req.body.description, req.body.url are not empty, or undefined
         if (req.body.title == undefined || req.body.url == undefined || req.body.tag== undefined) {
             res.json({message: "Missing required fields"}, 400);
@@ -42,23 +43,46 @@ var jsonParser = bodyParser.json()
         }
         const result = await client.db("sources").collection('videos').insertOne(youtube);
         res.json(result);
+    } catch (err) {
+        console.log(err);
+        res.json({message: "Internal server error"}, 500);
+    }
     });
     router.get('/', async (req, res) => {
+        try{
         const results = await client.db("sources").collection('videos').find().toArray();
         res.json(results);
+        }
+        catch (err) {
+            console.log(err);
+            res.json({message: "Internal server error"}, 500);
+        }
     });
     router.get('/search', async (req, res) => {
+        try{
         const tag = req.query.tag;
         console.log("Video Search " + tag)
         const results = await client.db("sources").collection('videos').find({tag: tag}).toArray()
 
         console.log("Video Search Results" + results)
         res.json(results);
+        }
+        catch (err) {
+            console.log(err);
+            res.json({message: "Internal server error"}, 500);
+        }
     });
     router.get('/sorted', async (req, res) => {
+        try{
         var results = await client.db("sources").collection('videos').find().sort({upvotes: -1}).toArray()
         results = results.slice(0, 10);
         res.json(results);
+        }
+        catch (err) {
+            console.log(err);
+            res.json({message: "Internal server error"}, 500);
+        }
+        
     });
 
 module.exports = router;

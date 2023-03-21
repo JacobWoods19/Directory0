@@ -9,6 +9,7 @@ var jsonParser = bodyParser.json()
     });
     ///api/communities
     router.post("/", jsonParser, async (req, res) => {
+        try{
         // check req.body.name, req.body.description, req.body.url are not empty, or undefined
         if (req.body.name == undefined || req.body.description == undefined || req.body.url == undefined || req.body.tag == undefined) {
             res.json({message: "Missing required fields"}, 400);
@@ -39,6 +40,10 @@ var jsonParser = bodyParser.json()
         }
         const result = await client.db("sources").collection('communities').insertOne(community);
         res.json(result);
+    } catch (err) {
+        console.log(err);
+        res.json({message: "Internal server error"}, 500);
+    }
     } );
     router.get('/', async (req, res) => {
         const results = await client.db("sources").collection('communities').find({tag: "starred"}).toArray();

@@ -9,6 +9,7 @@ var jsonParser = bodyParser.json()
     });
     //Validate account 
     router.post("/", jsonParser, async (req, res) => {
+        try{
         // check req.body.name, req.body.description, req.body.url are not empty, or undefined
         if (req.body.name == undefined || req.body.description == undefined || req.body.url == undefined || req.body.tag == undefined) {
             res.json({message: "Missing required fields"}, 400);
@@ -39,31 +40,60 @@ var jsonParser = bodyParser.json()
         }
         const result = await client.db("sources").collection('projects').insertOne(project);
         res.json(result);
+    } catch (err) {
+        console.log(err);
+        res.json({message: "Internal server error"}, 500);
+    }
     });
     router.get('/', async (req, res) => {
+        try{
         const results = await client.db("sources").collection('projects').find().toArray();
-
         res.json(results);
+        } catch (err) {
+            console.log(err);
+            res.json({message: "Internal server error"}, 500);
+        }
     });
     //project search
     router.get('/search', async (req, res) => {
+        try{
+
+        
         const tag_input = req.query.tag;
         var results = await client.db("sources").collection('projects').find({tag: tag_input}).sort({upvotes: -1}).toArray()
         results = results.slice(0, 7);
         res.json(results);
+        } catch (err) {
+            console.log(err);
+            res.json({message: "Internal server error"}, 500);
+        }
     });
     router.get('/sorted', async (req, res) => {
+        try{
         var results = await client.db("sources").collection('projects').find().sort({upvotes: -1}).toArray()
         results = results.slice(0, 7);
         res.json(results);
+        } catch (err) {
+            console.log(err);
+            res.json({message: "Internal server error"}, 500);
+        }
     });
     router.get('/search/new', async (req, res) => {
+<<<<<<< Updated upstream
+=======
+        try{
+
+>>>>>>> Stashed changes
         const limit = parseInt(req.query.limit) || 10; // default limit to 10 if not specified
         const page = parseInt(req.query.page) || 1; // default page to 1 if not specified
         const skip = (page - 1) * limit;
       
         const query = { tag: req.query.tag };
         const count = await client.db("sources").collection('projects').countDocuments(query);
+<<<<<<< Updated upstream
+=======
+        const totalPages = Math.ceil(count / limit);
+>>>>>>> Stashed changes
       
         const results = await client.db("sources").collection('projects')
           .find(query)
@@ -72,7 +102,17 @@ var jsonParser = bodyParser.json()
           .limit(limit)
           .toArray();
       
+<<<<<<< Updated upstream
         res.json({ results});
+=======
+        res.json({ results, totalPages });
+        }
+        catch (err) {
+            console.log(err);
+            res.json({message: "Internal server error"}, 500);
+        }
+        
+>>>>>>> Stashed changes
       });
 
 module.exports = router;
