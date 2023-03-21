@@ -12,3 +12,6 @@
   width: 3000px; /* or any other fixed value you prefer */
   height: 2000px; /* or any other fixed value you prefer */
 }
+.multiline {
+  white-space: pre-wrap;
+}

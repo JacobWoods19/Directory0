@@ -3,7 +3,6 @@ import React, { useEffect } from 'react';
 import NavBar from '../components/nav';
 import Search from '../components/search';
 import Card from '../components/card';
-import VideoCard from '../components/video_card';
 import CommunityCard from '../components/community_card';
 import LanguageCard from '../components/language_card';
 import NewButton from '../components/view_new';
@@ -20,8 +19,8 @@ class SearchNewPage extends React.Component {
             info_result: {},
             info_card_bool: true,
             website_pages: 1,
-            video_pages: 1,
             project_pages: 1,
+            community_pages: 1
         };
   }
   loadSearchResults() {
@@ -30,7 +29,7 @@ class SearchNewPage extends React.Component {
       const response = await fetch(url + '?' + new URLSearchParams(
           {
               tag: search_term,
-              limit: 6
+              limit: 3
           }
       ));
       const data = await response.json();
@@ -40,16 +39,15 @@ class SearchNewPage extends React.Component {
       console.log("Web data " + data.results)
       this.setState({website_results: data.results});
     });
-    // getSearchResults('http://localhost:8000/api/videos/search').then((data) => {
-    //   this.setState({video_results: data});
-    // });
     getSearchResults('http://localhost:8000/api/projects/search/new').then((data) => {
       console.log(data)
       this.setState({project_pages: this.state.project_pages + 1})
       this.setState({project_results: data.results});
     });
     getSearchResults('http://localhost:8000/api/communities/search/new').then((data) => {
-      this.setState({community_results: data});
+      console.log("Community Results" + data.results)
+      this.setState({project_pages: this.state.community_pages + 1})
+      this.setState({community_results: data.results});
     });
     getSearchResults('http://localhost:8000/api/info/search').then((data) => {
       try{
@@ -64,7 +62,6 @@ class SearchNewPage extends React.Component {
       this.setState({info_card_bool: false}); 
     }
     });
-
   }
   loadMoreWebsites() {
     console.log("load more websites")
@@ -74,7 +71,7 @@ class SearchNewPage extends React.Component {
           {
               tag: search_term,
               page: page,
-              limit: 1
+              limit: 3
           }
       ));
       const data = await response.json();
@@ -82,7 +79,6 @@ class SearchNewPage extends React.Component {
     }
     getSearchResults('http://localhost:8000/api/websites/search/new', this.state.website_pages + 1).then((data) => {
       console.log("Web data " + data)
-      //if data is empty, then we have reached the end of the results
       if (data.results.length == 0){
         alert("No more results")
         return;
@@ -107,7 +103,6 @@ class SearchNewPage extends React.Component {
     }
     getSearchResults('http://localhost:8000/api/projects/search/new', this.state.project_pages).then((data) => {
       console.log("Project data " + data)
-      //if data is empty, then we have reached the end of the results
       if (data.results.length == 0){
         alert("No more results")
         return;
@@ -116,16 +111,39 @@ class SearchNewPage extends React.Component {
       this.setState({project_pages: this.state.project_pages + 1 });
     });
   }
+  loadMoreCommunities() {
+    console.log("load more communities")
+    async function getSearchResults(url, page) {
+      const search_term = window.sessionStorage.getItem("search");
+      const response = await fetch(url + '?' + new URLSearchParams(
+          {
+              tag: search_term,
+              page: page,
+              limit: 3
+          }
+      ));
+      const data = await response.json();
+      return data;
+    }
+    getSearchResults('http://localhost:8000/api/communities/search/new', this.state.project_pages).then((data) => {
+      console.log("Community data " + data)
+      if (data.results.length == 0){
+        alert("No more results")
+        return;
+      }
+      this.setState({community_results: this.state.community_results.concat(data.results)});
+      this.setState({community_pages: this.state.community_pages + 1 });
+    });
+  }
 
   componentDidMount() {
       const search_term = window.sessionStorage.getItem("search");  
       console.log(search_term);
-      //call api and set state
       this.loadSearchResults();
   }
   render(){
     return (
-      <div className="bg-gray-900 min-h-screen">
+      <div className="bg-slate-900 min-h-screen">
         <div>
           <h1 className='pt-5 px-5 font-bold text-md text-white'>Find the best resources for learning how to code!</h1>
           <Search></Search>
@@ -136,11 +154,12 @@ class SearchNewPage extends React.Component {
           </div>
           { this.state.info_card_bool ? <LanguageCard language= {this.state.info_result.language} icon= {this.state.info_result.image_url} description = {this.state.info_result.description}></LanguageCard> : null }
             <h1 className='text-md py-3 font-bold text-white '>{window.sessionStorage.getItem("search")}  Communities</h1>
-              {/* <div className='grid grid-cols-1 gap-9 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
-                {this.state.community_results.map((result) => {
-                  return (<div className='py-2'><CommunityCard className ="my-5" name= {result.name} description = {result.description} url = {result.url} tag = {result.tag} upvotes = {result.upvotes}></CommunityCard></div>)
-                })}
-              </div> */}
+            {this.state.community_results.map((result) => {
+              return (<div className='py-2'><Card className ="my-5" title= {result.name} description = {result.description} url = {result.url} tag = {result.tag} upvotes = {result.upvotes}posted={result.publish_date} id={result._id} session= {this.props.session} type= "communities"></Card></div>)
+            })}
+            <button  class="text-white bg-slate-600 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 my-2" onClick={ ()=>
+                this.loadMoreWebsites(this.state.website_pages)
+                }>Load More</button>
               <h1 className='text-md py-3 font-bold text-white '>{window.sessionStorage.getItem("search")} Websites</h1>
               {this.state.website_results.map((result) => {
                 return (<div className='py-2'><Card className ="my-5" title= {result.name} description = {result.description} url = {result.url} tag = {result.tag} upvotes = {result.upvotes}posted={result.publish_date} id={result._id} session= {this.props.session} type= "websites"></Card></div>)
@@ -151,18 +170,13 @@ class SearchNewPage extends React.Component {
               <h1 className='text-md py-3 font-bold text-white '>{window.sessionStorage.getItem("search")}  Projects</h1>
               <div className='grid grid-cols-1 gap-9 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
               {this.state.project_results.map((result) => {
-                  return (<div className='py-2'><Card className ="my-5" title= {result.name} description = {result.description} url = {result.url} tag = {result.tag} upvotes = {result.upvotes} posted={result.publish_date} id={result._id} type= "projects"></Card></div>)
+                  return (<div className='py-2'><Card className ="my-5" title= {result.name} description = {result.description} url = {result.url} tag = {result.tag} upvotes = {result.upvotes} posted={result.publish_date} id={result._id} session= {this.props.session} type= "projects"></Card></div>)
                 })}
               </div>
               <button  class="text-white bg-slate-600 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 my-2" onClick={ ()=>
                 this.loadMoreProjects(this.state.project_pages)
               }>Load More</button>
               <h1 className='text-md py-3 font-bold text-white '>{window.sessionStorage.getItem("search")}  Videos</h1>
-              {/* <div className='grid grid-cols-1 gap-9 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
-              {this.state.video_results.map((result) => {
-                  return (<div className='py-2'><VideoCard className ="my-5" title= {result.title} description = {result.description} url = {result.url} tag = {result.tag} upvotes = {result.upvotes}></VideoCard></div>)
-                })}
-              </div> */}
           </div>
         </div>
     </div>

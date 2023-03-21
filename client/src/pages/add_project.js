@@ -68,16 +68,14 @@ class AddProject extends React.Component{
 
     render() {
        return(
-        <div className='p-5 bg-gray-900 min-h-screen'>
+        <div className='p-5 bg-slate-900 min-h-screen'>
             <ToastContainer />
             <h1 className='text-2xl py-3 font-bold text-white'>Add Project</h1>
         <ul class="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200">
             <li class="mr-2">
-                <a href="/add_website" class="inline-block p-4 rounded-t-lg">Website</a>
+                <a href="/add_website" class="inline-block p-4 rounded-t-lg">Website/Link</a>
             </li>
-            <li class="mr-2">
-                <a href="/add_video" class="inline-block p-4 rounded-t-lg">YT Video</a>
-            </li>
+
             <li class="mr-2">
                 <a href="/add_project" class="inline-block text-blue-600 bg-gray-100 p-4 rounded-t-lg hover:bg-gray-50 active ">Project</a>
             </li>
@@ -92,12 +90,12 @@ class AddProject extends React.Component{
             <input type="title" id="title" class="bg-slate-600 border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Project Title"required></input>
         </div>
         <div class="mb-6">
-            <label for="url" class="block mb-2 text-sm font-medium text-white">URL</label>
-            <input type="url" id="url" class="bg-slate-600 border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="URL To Project"required></input>
-        </div>
-        <div class="mb-6">
             <label for="description" class="block mb-2 text-sm font-medium text-white">Description</label>
             <input type="text" id="description" class="bg-slate-600 border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "  rows="5" placeholder=" A Brief Description"  required></input>
+        </div>
+        <div class="mb-6">
+            <label for="url" class="block mb-2 text-sm font-medium text-white">URL</label>
+            <input type="url" id="url" class="bg-slate-600 border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="URL To Project"required></input>
         </div>
         <div class="mb-6">
             <label for="description" class="block mb-2 text-sm font-medium text-white" >Topic</label>

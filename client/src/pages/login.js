@@ -50,6 +50,7 @@ export default function Auth() {
         </div>
         <div>
           <button
+            type= "submit"
             onClick={(e) => {
               e.preventDefault()
               handleLogin(email)

@@ -67,16 +67,14 @@ class AddCommunity extends React.Component{
 
     render() {
        return(
-        <div className='p-5 bg-gray-900 min-h-screen'>
+        <div className='p-5 bg-slate-900 min-h-screen'>
             <ToastContainer />
             <h1 className='text-2xl py-3 font-bold text-white'>Add Community</h1>
         <ul class="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200">
             <li class="mr-2">
                 <a href="/add_website" class="inline-block p-4 rounded-t-lg">Website</a>
             </li>
-            <li class="mr-2">
-                <a href="/add_video" class="inline-block p-4 text-gray-400 rounded-t-lg dark:text-gray-500">YT Video</a>
-            </li>
+
             <li class="mr-2">
                 <a href="/add_project" class="inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 ">Project</a>
             </li>
@@ -101,7 +99,7 @@ class AddCommunity extends React.Component{
         </div>
         <div class="mb-6">
             <label for="description" class="block mb-2 text-sm font-medium text-white" >Topic</label>
-            <input type="description" id="tag" class="bg-slate-600 border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="AI, Python, C++"required></input>
+            <input type="description" id="tag" class="bg-slate-600 border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="i.e AI, Python, C++"required></input>
         </div>
 
         

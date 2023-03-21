@@ -68,7 +68,99 @@ export default function Card (props) {
       return false;
     }
   }
-  function addBookmark( id) {
+  async function downvote(user_id, id, type) {
+    const response = await fetch('http://localhost:8000/api/downvote', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user_id: user_id,
+        id: id,
+        type: type
+      })
+    });
+    if (response.status === 200) {
+      // Remove from local storage
+      let upvotedProjects = JSON.parse(localStorage.getItem("upvotedProjects"))
+      if(upvotedProjects === null){
+        upvotedProjects = []
+      }
+      upvotedProjects = upvotedProjects.filter((project) => project !== id)
+      localStorage.setItem("upvotedProjects", JSON.stringify(upvotedProjects))
+      setBarColor("bg-blue-500")
+      setUpvotes(upvotes - 1)
+      setHasUpvoted(false)
+      return true;
+    }
+    if(response.status === 400){
+      alert("Downvote failed!")
+      return false;
+    }
+    else {
+      return false;
+    }
+  }
+  function addBookmarkToDatabase(id) {
+    alert("Bookmark working on it!")
+    async function add(){
+      const response = await fetch('http://localhost:8000/api/bookmarked', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user_id: props.session.data.session.user.id,
+          id: id
+        })
+      });
+      if (response.status === 200) {
+        addBookmark(id)
+        alert("Bookmark added!")
+        return true;
+      }
+      if(response.status === 400){
+        alert("Bookmark failed!")
+        return false;
+      }
+      else {
+        return false;
+      }
+    }
+    add();
+      
+    }
+  function removeBookmarkFromDatabase(id) {
+    alert("Bookmark working on it!")
+    async function remove(){
+      const response = await fetch('http://localhost:8000/api/bookmarked/remove', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user_id: props.session.data.session.user.id,
+          id: id
+        })
+      });
+      if (response.status === 200) {
+        removeBookmark(id)
+        alert("Bookmark removed!")
+        return true;
+      }
+      if(response.status === 400){
+        alert("Bookmark failed!")
+        return false;
+      }
+      else {
+        return false;
+      }
+    }
+    remove();
+
+  }
+  
+  function addBookmark(id) {
     // For now, just add to local storage
     let bookmarkedProjects = JSON.parse(localStorage.getItem("bookmarkedProjects"))
     if(bookmarkedProjects === null){
@@ -76,6 +168,8 @@ export default function Card (props) {
     }
     bookmarkedProjects.push(id)
     localStorage.setItem("bookmarkedProjects", JSON.stringify(bookmarkedProjects))
+    // add to database
+    
     setHasBookmarked(true)
   }
   function removeBookmark(id) {
@@ -122,7 +216,12 @@ export default function Card (props) {
       </div>
 
  
-      <button class="mx-3 my-3 py-1 px-2 shadow-md no-underline rounded-full bg-blue-500 text-white font-sans font-semibold text-sm border-blue btn-primary hover:text-white hover:bg-blue-light focus:outline-none active:shadow-none mr-2">{props.tag}</button>
+      <button class="mx-3 my-3 py-1 px-2 shadow-md no-underline rounded-full bg-blue-500 text-white font-sans font-semibold text-sm border-blue btn-primary hover:text-white hover:bg-blue-light focus:outline-none active:shadow-none mr-2" onClick={
+        () => {
+          window.sessionStorage.setItem("search", props.tag);
+          window.location.href = "/result";
+        }
+      }>{props.tag}</button>
 
 
       {/* <button class="mx-3 my-3 py-1 px-2 shadow-md no-underline rounded-full bg-blue-500 text-white font-sans font-semibold text-sm border-blue btn-primary hover:text-white hover:bg-blue-light focus:outline-none active:shadow-none mr-2">Machine Learning</button>
@@ -133,10 +232,9 @@ export default function Card (props) {
       if (!hasUpvoted) {
         console.log(props.id)
         upvote(props.session.data.session.user.id, props.id, props.type)
-
       }
       else {
-        alert("You have already upvoted this project!")
+        downvote(props.session.data.session.user.id, props.id, props.type)
       }
     }
     else {
@@ -147,11 +245,11 @@ export default function Card (props) {
       () => {
         if(props?.session?.data.session?.user){
         if (!hasBookmarked) {
-          addBookmark(props.id)
+          addBookmarkToDatabase(props.id)
           setHasBookmarked(true)
         }
         else {
-          removeBookmark(props.id)
+          removeBookmarkFromDatabase(props.id)
           setHasBookmarked(false)
         }
       }

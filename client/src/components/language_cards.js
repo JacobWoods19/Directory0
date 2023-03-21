@@ -6,8 +6,9 @@ export default function LanguageCards (props) {
     // icon: props.icon,
     // description: props.description,
     return(
-        <div><h1 className='pt-5 pb-5 font-bold text-md text-white'>Not sure where to start? Pick a language below</h1>
- 
+        <div>
+
+        <h1 className='pt-5 pb-5 font-bold text-md text-white'>Not sure where to start? Pick a language below</h1>
         <div class="grid grid-cols-2 gap-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
         <LanguageCard language= "Python" icon= "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original-wordmark.svg" description = "A Python thing"></LanguageCard>
         <LanguageCard language= "Java" icon= "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original-wordmark.svg" description = "A class-based, object-oriented programming language that is commonly used for building enterprise-level applications."></LanguageCard>
@@ -21,8 +22,9 @@ export default function LanguageCards (props) {
         <LanguageCard language= "Arduino" icon= "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/arduino/arduino-original-wordmark.svg" description = "A low-level programming language used to create interactive objects."></LanguageCard>
         <LanguageCard language= "Swift" icon= "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swift/swift-original-wordmark.svg" description = "A general-purpose, object-oriented programming language that is commonly used for developing iOS and macOS applications."></LanguageCard>
         <LanguageCard language= "Kotlin" icon= "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kotlin/kotlin-original-wordmark.svg" description = "A general-purpose, object-oriented programming language that is commonly used for developing Android applications."></LanguageCard>
+        
         </div>
- 
+
       </div>
     )
 }

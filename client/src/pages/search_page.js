@@ -3,7 +3,6 @@ import React, { useEffect } from 'react';
 import NavBar from '../components/nav';
 import Search from '../components/search';
 import Card from '../components/card';
-import VideoCard from '../components/video_card';
 
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
@@ -65,10 +64,10 @@ class SearchPage extends React.Component {
   }
   render(){
     return (
-        <div className="bg-gray-900">
+        <div className="bg-slate-900">
           <div>
           <div class="grid place-items-center p-5">
-            <Carousel showArrows={true} width = {"fill"} dynamicHeight={true}>
+            <Carousel showArrows={true} width = {"100%"} dynamicHeight={true} autoPlay={true} infiniteLoop={true} className="p-5"> 
                 <div>
                     <img src="https://miro.medium.com/max/1200/1*nm4VZt2HpZj0CW3FL3b-eg.png" />
                     <p className="legend">CS50</p>
@@ -95,7 +94,7 @@ class SearchPage extends React.Component {
             <h1 className='pt-5 font-bold text-md text-white'>Great Communities To Discover</h1>
             <div className='pt-5 grid grid-cols-1 gap-9 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
             {this.state.community_results.map((result) => {
-                  return (<div className='py-2'><CommunityCard name= {result.name} description={result.description}  url= {result.url}></CommunityCard></div>)
+                   return (<div className='py-2'><CommunityCard className ="my-5" title= {result.name} description = {result.description} url = {result.url} tag = {result.tag} upvotes = {result.upvotes} session= {this.props.session} id={result._id} type= "communities"></CommunityCard></div>)
             })}
             </div>
             </div>
@@ -118,12 +117,7 @@ class SearchPage extends React.Component {
                   return (<div className='py-2'><Card className ="my-5" title= {result.name} description = {result.description} url = {result.url} tag = {result.tag} upvotes = {result.upvotes} session= {this.props.session} id={result._id} type= "projects"></Card></div>)
                 })}
                 </div>
-                <h1 className='text-lg py-3 font-bold text-white '>Top Videos</h1>
-                <div className='grid grid-cols-1 gap-9 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-5'>
-                {this.state.video_results.map((result) => {
-                    return (<div className='py-2'><VideoCard className ="my-5" title= {result.title} description = {result.description} url = {result.url} tag = {result.tag} upvotes = {result.upvotes}></VideoCard></div>)
-                  })}
-              </div>
+              
             </div>
           </div>
       </div>
