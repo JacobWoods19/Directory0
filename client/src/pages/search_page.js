@@ -9,13 +9,13 @@ import { Carousel } from 'react-responsive-carousel';
 import LanguageCard from '../components/language_card';
 import LanguageCards from '../components/language_cards';
 import CommunityCard from '../components/community_card';
+import {ReactGA} from 'react-ga';
 class SearchPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       search_term: "",
       website_results: [],
-      video_results: [],
       course_results: [],
       project_results: [],
       general_results: [],
@@ -32,14 +32,7 @@ class SearchPage extends React.Component {
       // console.log(data)
       this.setState({ website_results: data });
     });
-    getSearchResults('http://localhost:8000/api/videos/sorted').then((data) => {
-      // console.log(data)
-      this.setState({ video_results: data });
-    });
-    getSearchResults('http://localhost:8000/api/courses/sorted').then((data) => {
-      // console.log(data)
-      this.setState({ course_results: data });
-    });
+
     getSearchResults('http://localhost:8000/api/projects/sorted').then((data) => {
       // console.log(data)
       this.setState({ project_results: data });
@@ -48,33 +41,34 @@ class SearchPage extends React.Component {
       // console.log(data)
       this.setState({ general_results: data });
     });
-    getSearchResults('http://localhost:8000/api/communities').then((data) => {
+    getSearchResults('http://localhost:8000/api/communities/sorted').then((data) => {
       // console.log(data)
       this.setState({ community_results: data });
     });
 
   }
   componentDidRefresh() {
-
     console.log("SESSION" + this.props.session)
   }
   componentDidMount() {
-
+    ReactGA.pageView(window.location.pathname);
     this.loadSearchResults();
   }
   render() {
     return (
       <div className="bg-slate-900">
         <div>
+          
           <div class="grid place-items-center p-5">
-            <Carousel showArrows={true} width={"100%"} dynamicHeight={true} autoPlay={true} infiniteLoop={true} className="p-5">
+          <h1 className='pt-5 font-bold text-md text-white'>Great Communities To Discover</h1>
+            <Carousel showArrows={true} width={"100%"} dynamicHeight={false} autoPlay={true} infiniteLoop={true} className="p-5">
               <div>
                 <img src="https://miro.medium.com/max/1200/1*nm4VZt2HpZj0CW3FL3b-eg.png" />
-                <p className="legend">CS50</p>
+                <h1 className="legend text-2xl ">CS50</h1>
               </div>
               <div>
                 <img src="https://www.theodinproject.com/assets/og-logo-022832d4cefeec1d5266237be260192f5980f9bcbf1c9ca151b358f0ce1fd2df.png" />
-                <p className="legend">Legend 3</p>
+                <p href ="www.google.com" className="legend">Odin Project</p>
               </div>
               <div>
                 <img src="https://cdn-media-1.freecodecamp.org/images/0*oDbEFNhoM75KOnvF." />
@@ -82,7 +76,7 @@ class SearchPage extends React.Component {
               </div>
               <div>
                 <img src="https://i.pcmag.com/imagery/reviews/01tPXClg2WjLamQzScplH3y-15.fit_scale.size_760x427.v1627670281.png" />
-                <p className="legend">Legend 3</p>
+                <p className="legend">Free Code Camp</p>
               </div>
             </Carousel>
           </div>

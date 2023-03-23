@@ -10,13 +10,13 @@ export default function NavBar(props) {
     }, [])
     return (
 
-        <div class="flex justify-between p-5 bg-slate-900">
+        <div className="flex justify-between p-5 bg-slate-900">
 
-            <a href="/"><img src="Logo.png" class="w-32 object-contain"></img></a>
+            <a href="/"><img src="Logo.png" className="w-32 object-contain"></img></a>
 
-            <div class="flex items-center">
+            <div className="flex items-center">
                 {showSubmit ? (
-                    <a class="bg-white text-slate-800  text-sm hover:bg-slate-400 font-bold py-2 px-4 rounded" href="/add_website">
+                    <a className="bg-white text-slate-800  text-sm hover:bg-slate-400 font-bold py-2 px-4 rounded" href="/add_website">
                         Submit
                     </a>
                 ) : null}
@@ -24,24 +24,24 @@ export default function NavBar(props) {
                 {
                     props?.session?.data.session?.user ? (
                         showSubmit ? (
-                            <btn class="bg-red-500 text-slate-800 cursor-pointer text-sm hover:bg-red-600 font-bold py-2 px-4 m-2 rounded " href="/add_website" onClick={() =>
+                            <button className="bg-red-500 text-slate-800 cursor-pointer text-sm hover:bg-red-600 font-bold py-2 px-4 m-2 rounded " href="/add_website" onClick={() =>
                                 supabase.auth.signOut()
                                     //clear local storage
                                     .then(() => localStorage.clear())
                                     //refresh page
                                     .then(() => window.location.replace("/"))
                             }>
-                                Logout </btn>
+                                Logout </button>
                         ) : (
                             null)
                     ) :
                         showSubmit ? (
-                            <btn class="bg-green-500 text-slate-800 cursor-pointer text-sm hover:bg-green-600 font-bold py-2 px-4 m-2 rounded" href="/add_website" onClick={
+                            <button className="bg-green-500 text-slate-800 cursor-pointer text-sm hover:bg-green-600 font-bold py-2 px-4 m-2 rounded" href="/add_website" onClick={
                                 () => window.location.replace("/login")
                             }>
-                                Login </btn>
+                                Login </button>
                         ) : (null)}
-                <btn className='bg-white text-slate-800 cursor-pointer text-sm hover:bg-slate-200 font-bold py-2 px-2  rounded' onClick={() => {
+                <button className='bg-white text-slate-800 cursor-pointer text-sm hover:bg-slate-200 font-bold py-2 px-2  rounded' onClick={() => {
                     if (props?.session?.data.session?.user) {
                         window.location.href = "/saved"
                     }
@@ -50,7 +50,7 @@ export default function NavBar(props) {
                     }
                 }}>
                     <img src="bookmark_fill.png" className='w-5 h-5' ></img>
-                </btn>
+                </button>
 
             </div>
         </div>

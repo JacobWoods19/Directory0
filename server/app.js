@@ -7,7 +7,6 @@ const { createClient } = require('@supabase/supabase-js')
 var websiteRouter = require('./routes/website_router');
 var projectRouter = require('./routes/project_router');
 var communityRouter = require('./routes/community_router');
-var videoRouter = require('./routes/video_router');
 var infoRouter = require('./routes/info_router');
 const port = 8000;
 var bodyParser = require('body-parser')
@@ -32,7 +31,6 @@ async function run() {
     app.use('/api/websites', websiteRouter);
     app.use('/api/projects', projectRouter);
     app.use('/api/communities', communityRouter);
-    app.use('/api/videos', videoRouter);
     app.use('/api/info', infoRouter);
 
     // create a route for the homepage
@@ -49,7 +47,7 @@ async function run() {
         let database = client.db("sources")
         try {
             // Search through all collections for the document with the specified ID
-            const collections = ['websites', 'projects', 'general', 'videos'];
+            const collections = ['websites', 'projects', 'general', 'communities'];
             for (const collectionName of collections) {
                 const collection = database.collection(collectionName);
                 const document = await collection.findOne({ _id: new ObjectId(id) });

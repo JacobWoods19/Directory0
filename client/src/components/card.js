@@ -3,7 +3,9 @@ import React, { useEffect } from 'react';
 function getFaviconFromUrl(url) {
   var url = new URL(url);
   // console.log(url.protocol + "//" + url.hostname + "/favicon.ico")
-  return url.protocol + "//" + url.hostname + "/favicon.ico";
+  url = url.protocol + "//" + url.hostname + "/favicon.ico";
+  // if the url returns a 404, return the default favicon
+  return url;
 }
 
 export default function Card(props) {
@@ -15,7 +17,7 @@ export default function Card(props) {
     //check if user has upvoted this project
     let upvotedProjects = JSON.parse(localStorage.getItem("upvotedProjects"));
     if (upvotedProjects) {
-      if (upvotedProjects.includes(props.id) || hasUpvoted) {
+      if ((upvotedProjects.includes(props.id) || hasUpvoted) && props.session?.data?.session?.user?.id) {
         setBarColor("bg-green-500");
         setHasUpvoted(true);
       }
@@ -23,6 +25,24 @@ export default function Card(props) {
         setBarColor("bg-blue-500");
       }
     }
+    window.addEventListener('storage', () => {
+      let upvotedProjects = JSON.parse(localStorage.getItem("upvotedProjects"));
+      if (upvotedProjects) {
+        if (upvotedProjects.includes(props.id) || hasUpvoted) {
+          setBarColor("bg-green-500");
+          setHasUpvoted(true);
+        }
+        else {
+          setBarColor("bg-blue-500");
+        }
+      }
+      let bookmarkedProjects = JSON.parse(localStorage.getItem("bookmarkedProjects"));
+      if (bookmarkedProjects) {
+        if (bookmarkedProjects.includes(props.id) || hasBookmarked) {
+          setHasBookmarked(true);
+        }
+      }
+  })
     //check if user has bookmarked this project
     let bookmarkedProjects = JSON.parse(localStorage.getItem("bookmarkedProjects"));
     if (bookmarkedProjects) {
@@ -145,11 +165,9 @@ export default function Card(props) {
       });
       if (response.status === 200) {
         removeBookmark(id)
-        alert("Bookmark removed!")
         return true;
       }
       if (response.status === 400) {
-        alert("Bookmark failed!")
         return false;
       }
       else {
@@ -240,7 +258,7 @@ export default function Card(props) {
           else {
             window.location.href = "/login"
           }
-        }}> {upvotes} Upvotes</h1>
+        }}>🥇 {upvotes} Upvotes</h1>
         <img src={hasBookmarked ? "bookmark_fill.png" : "bookmark.png"} className="w-8 cursor-pointer" onClick={
           () => {
             if (props?.session?.data.session?.user) {

@@ -30,7 +30,7 @@ router.post("/", jsonParser, async (req, res) => {
             url: req.body.url,
             upvotes: 0,
             published_date: new Date(),
-            is_published: true,
+            is_published: false,
             tag: req.body.tag,
         };
         const website_exists = await client.db("sources").collection('websites').find({ url: website.url }).toArray();
@@ -84,6 +84,7 @@ router.get('/search', async (req, res) => {
 });
 //Search by tag name , checks if tag name is in the tags array of document
 router.get('/search/new', async (req, res) => {
+    try {
     const limit = parseInt(req.query.limit) || 10; // default limit to 10 if not specified
     const page = parseInt(req.query.page) || 1; // default page to 1 if not specified
     const skip = (page - 1) * limit;
@@ -98,6 +99,12 @@ router.get('/search/new', async (req, res) => {
         .toArray();
 
     res.json({ results });
+    }
+    catch (err) {
+        res.json({ message: "Error" }, 400);
+        return;
+    }
+    
 });
 
 //insert website into database
@@ -171,7 +178,6 @@ router.get('/search/new', async (req, res) => {
         const skip = (page - 1) * limit;
 
         const query = { tag: req.query.tag };
-        const count = await client.db("sources").collection('websites').countDocuments(query);
 
         const results = await client.db("sources").collection('websites')
             .find(query)
@@ -188,6 +194,53 @@ router.get('/search/new', async (req, res) => {
     }
 
 });
+router.get('/unpublished', async (req, res) => {
+    try {
+
+        if (req.query.password != "averysecurepassword") {
+            res.json({ message: "Invalid password" }, 400);
+            return;
+        }
+        const results = await client.db("sources").collection('websites').find({ is_published: false }).toArray();
+        res.json(results);
+    }
+    catch (err) {
+        console.log(err);
+        res.json({ message: "Internal server error" }, 500);
+    }
+});
+//allow admin to publish a website
+router.post('/publish', jsonParser, async (req, res) => {
+    try {
+        if (req.query.password != "averysecurepassword") {
+            res.json({ message: "Invalid password" }, 400);
+            return;
+        }
+        const result = await client.db("sources").collection('websites').updateOne({ _id: new ObjectId(req.query.id) }, { $set: { is_published: true } });
+        res.json(result);
+    }
+    catch (err) {
+        console.log(err);
+        res.json({ message: "Internal server error" }, 500);
+    }
+});
+router.post('/delete', jsonParser, async (req, res) => {
+    try {
+        if (req.query.password != "averysecurepassword") {
+            res.json({ message: "Invalid password" }, 400);
+            return;
+        }
+        const result = await client.db("sources").collection('websites').deleteOne({ _id: new ObjectId(req.query.id) });
+        res.json(result);
+    }
+    catch (err) {
+        console.log(err);
+        res.json({ message: "Internal server error" }, 500);
+    }
+});
+
+
+
 
 
 

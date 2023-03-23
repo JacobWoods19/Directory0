@@ -7,6 +7,19 @@ let client = new MongoClient("mongodb+srv://doadmin:FG3hx582n9oH1b06@db-mongodb-
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
+
+
+router.get('/sorted', async (req, res) => {
+    try {
+        var results = await client.db("sources").collection('communities').find().sort({ upvotes: -1 }).toArray()
+        results = results.slice(0, 6);
+        res.json(results);
+    } catch (err) {
+        console.log(err);
+        res.json({ message: "Internal server error" }, 500);
+    }
+});
+
 ///api/communities
 router.post("/", jsonParser, async (req, res) => {
     try {
@@ -30,7 +43,7 @@ router.post("/", jsonParser, async (req, res) => {
             url: req.body.url,
             upvotes: 0,
             published_date: new Date(),
-            is_published: true,
+            is_published: false,
             tag: req.body.tag,
         };
         const community_exists = await client.db("sources").collection('communities').find({ url: community.url }).toArray();
@@ -90,5 +103,47 @@ router.get('/search/new', async (req, res) => {
     }
 
 });
+router.get('/unpublished', async (req, res) => {
+    try {
+        if (req.query.password != "averysecurepassword") {
+            res.json({ message: "Invalid password" }, 400);
+            return;
+        }
+        const results = await client.db("sources").collection('communities').find({ is_published: false }).toArray();
+        res.json(results);
+    }
+    catch (err) {
+        console.log(err);
+        res.json({ message: "Internal server error" }, 500);
+    }
+});
 
+router.post('/publish', jsonParser, async (req, res) => {
+    try {
+        if (req.query.password != "averysecurepassword42069") {
+            res.json({ message: "Invalid password" }, 400);
+            return;
+        }
+        const result = await client.db("sources").collection('communities').updateOne({ _id: new ObjectId(req.query.id) }, { $set: { is_published: true } });
+        res.json(result);
+    }
+    catch (err) {
+        console.log(err);
+        res.json({ message: "Internal server error" }, 500);
+    }
+});
+router.post('/delete', jsonParser, async (req, res) => {
+    try {
+        if (req.query.password != "averysecurepassword") {
+            res.json({ message: "Invalid password" }, 400);
+            return;
+        }
+        const result = await client.db("sources").collection('community').deleteOne({ _id: new ObjectId(req.query.id) });
+        res.json(result);
+    }
+    catch (err) {
+        console.log(err);
+        res.json({ message: "Internal server error" }, 500);
+    }
+});
 module.exports = router;

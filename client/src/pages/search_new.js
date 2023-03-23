@@ -176,7 +176,6 @@ class SearchNewPage extends React.Component {
             <button class="text-white bg-slate-600 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 my-2" onClick={() =>
               this.loadMoreProjects(this.state.project_pages)
             }>Load More</button>
-            <h1 className='text-md py-3 font-bold text-white '>{window.sessionStorage.getItem("search")}  Videos</h1>
           </div>
         </div>
       </div>

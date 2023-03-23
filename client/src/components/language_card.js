@@ -10,8 +10,10 @@ class LanguageCard extends React.Component {
         }
     }
     handleClick = () => {
+        if(this.props.clickable == true) {
         window.sessionStorage.setItem("search", this.state.language);
         window.location.href = "/result";
+        }
     }
     render() {
         return (

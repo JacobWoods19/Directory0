@@ -32,7 +32,7 @@ export default function Auth() {
   return (
     <div>
       <ToastContainer />
-      <div className="bg-gray-900 flex flex-col items-center justify-center mx-auto h-screen ">
+      <div className="bg-slate-900 flex flex-col items-center justify-center mx-auto h-screen ">
         <div className="shadow">
           <div className="w-full p-5 bg-white rounded-lg shadow-lg dark:border   bg-gray-200 ">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-slate-800 md:text-2xl text-slate-800">Magic Link Sign In</h1>

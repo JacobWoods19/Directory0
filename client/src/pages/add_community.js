@@ -72,7 +72,7 @@ class AddCommunity extends React.Component {
                 <h1 className='text-2xl py-3 font-bold text-white'>Add Community</h1>
                 <ul class="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200">
                     <li class="mr-2">
-                        <a href="/add_website" class="inline-block p-4 rounded-t-lg">Website</a>
+                        <a href="/add_website" class="inline-block p-4 rounded-t-lg">Website/Link</a>
                     </li>
 
                     <li class="mr-2">

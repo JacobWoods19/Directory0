@@ -16,7 +16,8 @@ import Footer from './components/footer';
 import SearchNewPage from './pages/search_new';
 import TOS from './pages/tos';
 import Privacy from './pages/privacy';
-
+import {Helmet} from "react-helmet";
+import {ReactGA} from 'react-ga';
 function getUpvotes(user_id) {
   async function getUpvotesFromDatabase() {
     const response = await fetch('http://localhost:8000/api/get_upvotes' + '?' + new URLSearchParams(
@@ -26,8 +27,7 @@ function getUpvotes(user_id) {
     ))
 
     const data = await response.json();
-    console.log("DATA!!!!")
-    console.log(data);
+ 
     if (data?.upvotes && data?.upvotes.length > 0) {
       window.localStorage.setItem("upvotedProjects", JSON.stringify(data.upvotes.map((upvote) => upvote.source_id)));
     }
@@ -43,13 +43,8 @@ function getBookmarks(user_id) {
         user_id: user_id
       }
     ))
-
     const data = await response.json();
-    console.log("DATA!!!!!!!!!!!!!!!!!!!!!!")
-    console.log(data);
-
     if (data) {
-
       window.localStorage.setItem("bookmarkedProjects", JSON.stringify(data.map((bookmark) => bookmark.source_id)));
     }
   }
@@ -60,30 +55,31 @@ function getBookmarks(user_id) {
 
 function App() {
   const [session, setSession] = useState(null);
+  ReactGA.initialize('UA-194292422-1');
   useEffect(() => {
-    document.title = "Directory0 | Learn To Code"
+    document.title = "Directory0 | Learn To Code";
     document.body.style.backgroundColor = "#f5f5f5";
     supabase.auth.getSession().then((session) => {
       setSession(session);
-      if (session) {
-        getUpvotes(session.data.session.user.id);
-        getBookmarks(session.data.session.user.id);
+      if (session?.data?.session?.user) {
+        getUpvotes(session?.data?.session?.user?.id);
+        getBookmarks(session?.data?.session?.user?.id);
+        window.dispatchEvent(new Event("storage"));
       }
-      console.log("App session: " + JSON.stringify(session));
+      else{
+        window.localStorage.removeItem("upvotedProjects");
+        window.localStorage.removeItem("bookmarkedProjects");
+      }
     })
-    supabase.auth.onAuthStateChange((_event, session) => {
-      // if (session){
-      //   setSession(session);
-      // }
-    }
-      //validate and upload upvoted history and saved history to supabase
 
-
-    )
   }, [])
-  //TODO: On component mount, if the user is logged in add upvoted history and saved history to local storage
   return (
     <div>
+      <Helmet>
+        <meta property="og:title" content="Directory0.Org" />
+        <meta property="og:description" content="Directory0.org is a directory of the best coding resources. Find the best coding resources for your next project." />
+        <meta property="og:image" content="Headerimage.png" />
+      </Helmet>
       <NavBar showSubmit="true" session={session}></NavBar>
       <BrowserRouter>
         <Routes>

@@ -1,6 +1,7 @@
 {
   "short_name": "Directory0",
   "name": "Directory0.org | Find The Best Coding Resources",
+  "description": "Directory0.org is a directory of the best coding resources. Find the best coding resources for your next project.",
   "icons": [
     {
       "src": "favicon.ico",

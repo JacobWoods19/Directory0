@@ -110,7 +110,67 @@ export default function CommunityCard (props) {
     bookmarkedProjects.push(id)
     localStorage.setItem("bookmarkedProjects", JSON.stringify(bookmarkedProjects))
     setHasBookmarked(true)
+
   }
+  function addBookmarkToDatabase(id) {
+    alert("Bookmark working on it!")
+    async function add() {
+      const response = await fetch('http://localhost:8000/api/bookmarked', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user_id: props.session.data.session.user.id,
+          id: id
+        })
+      });
+      if (response.status === 200) {
+        addBookmark(id)
+        alert("Bookmark added!")
+        return true;
+      }
+      if (response.status === 400) {
+        alert("Bookmark failed!")
+        return false;
+      }
+      else {
+        return false;
+      }
+    }
+    add();
+
+  }
+  function removeBookmarkFromDatabase(id) {
+    alert("Bookmark working on it!")
+    async function remove() {
+      const response = await fetch('http://localhost:8000/api/bookmarked/remove', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user_id: props.session.data.session.user.id,
+          id: id
+        })
+      });
+      if (response.status === 200) {
+        removeBookmark(id)
+        alert("Bookmark removed!")
+        return true;
+      }
+      if (response.status === 400) {
+        alert("Bookmark failed!")
+        return false;
+      }
+      else {
+        return false;
+      }
+    }
+    remove();
+
+  }
+
   function removeBookmark(id) {
     // For now, just add to local storage
     let bookmarkedProjects = JSON.parse(localStorage.getItem("bookmarkedProjects"))
@@ -171,16 +231,16 @@ export default function CommunityCard (props) {
     else {
       window.location.href = "/login"
     }
-    }}> {upvotes} Upvotes</h1>
+    }}>🥇 {upvotes} Upvotes</h1>
     <img src= {hasBookmarked ? "bookmark_fill.png" : "bookmark.png"} className = "w-8 cursor-pointer" onClick={
       () => {
         if(props?.session?.data.session?.user){
         if (!hasBookmarked) {
-          addBookmark(props.id)
+          addBookmarkToDatabase(props.id)
           setHasBookmarked(true)
         }
         else {
-          removeBookmark(props.id)
+          removeBookmarkFromDatabase(props.id)
           setHasBookmarked(false)
         }
       }

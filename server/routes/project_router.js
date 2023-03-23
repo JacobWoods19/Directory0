@@ -30,7 +30,7 @@ router.post("/", jsonParser, async (req, res) => {
             url: req.body.url,
             upvotes: 0,
             published_date: new Date(),
-            is_published: true,
+            is_published: false,
             tag: req.body.tag,
         };
         const project_exists = await client.db("sources").collection('projects').find({ url: project.url }).toArray();
@@ -95,5 +95,50 @@ router.get('/search/new', async (req, res) => {
         res.json({ message: "Internal server error" }, 500);
     }
 });
-
+router.get('/unpublished', async (req, res) => {
+    try {
+        if (req.query.password != "averysecurepassword") {
+            res.json({ message: "Invalid password" }, 400);
+            return;
+        }
+        const results = await client.db("sources").collection('projects').find({ is_published: false }).toArray();
+        res.json(results);
+    }
+    catch (err) {
+        console.log(err);
+        res.json({ message: "Internal server error" }, 500);
+    }
+});
+router.post('/publish', jsonParser, async (req, res) => {
+    try {
+        if (req.query.password != "averysecurepassword") {
+            res.json({ message: "Invalid password" }, 400);
+            return;
+        }
+        const result = await client.db("sources").collection('projects').updateOne({ _id: new ObjectId(req.query.id) }, { $set: { is_published: true } });
+        if (result.modifiedCount == 0) {
+            res.json({ message: "Project not found" }, 404);
+            return;
+        }
+        res.json(result);
+    }
+    catch (err) {
+        console.log(err);
+        res.json({ message: "Internal server error" }, 500);
+    }
+});
+router.post('/delete', jsonParser, async (req, res) => {
+    try {
+        if (req.query.password != "averysecurepassword") {
+            res.json({ message: "Invalid password" }, 400);
+            return;
+        }
+        const result = await client.db("sources").collection('projects').deleteOne({ _id: new ObjectId(req.query.id) });
+        res.json(result);
+    }
+    catch (err) {
+        console.log(err);
+        res.json({ message: "Internal server error" }, 500);
+    }
+});
 module.exports = router;

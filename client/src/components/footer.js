@@ -17,7 +17,7 @@ export default function Footer() {
                         <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Follow us</h2>
                         <ul class="text-gray-600 dark:text-gray-400">
                             <li>
-                                <a href="https://discord.gg/4eeurUVvTy" class="hover:underline">Discord</a>
+                                <a href="https://twitter.com/JWoodsDev" class="hover:underline">Twitter</a>
                             </li>
                         </ul>
                     </div>
@@ -36,7 +36,7 @@ export default function Footer() {
             </div>
             <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
             <div class="sm:flex sm:items-center sm:justify-between">
-                <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 Codeojo. All Rights Reserved.
+                <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 Directory0.Org . All Rights Reserved.
                 </span>
             </div>
         </footer>
