@@ -58,28 +58,6 @@ class SearchPage extends React.Component {
     return (
       <div className="bg-slate-900">
         <div>
-          
-          <div class="grid place-items-center p-5">
-          <h1 className='pt-5 font-bold text-md text-white'>Great Communities To Discover</h1>
-            <Carousel showArrows={true} width={"80%"} dynamicHeight={false} autoPlay={true} infiniteLoop={true} className="p-5">
-              <div>
-                <img src="https://miro.medium.com/max/1200/1*nm4VZt2HpZj0CW3FL3b-eg.png" />
-                <h1 className="legend text-2xl ">CS50</h1>
-              </div>
-              <div>
-                <img src="https://www.theodinproject.com/assets/og-logo-022832d4cefeec1d5266237be260192f5980f9bcbf1c9ca151b358f0ce1fd2df.png" />
-                <p href ="www.google.com" className="legend">Odin Project</p>
-              </div>
-              <div>
-                <img src="https://cdn-media-1.freecodecamp.org/images/0*oDbEFNhoM75KOnvF." />
-                <p className="legend p-5">Scratch</p>
-              </div>
-              <div>
-                <img src="https://i.pcmag.com/imagery/reviews/01tPXClg2WjLamQzScplH3y-15.fit_scale.size_760x427.v1627670281.png" />
-                <p className="legend">Free Code Camp</p>
-              </div>
-            </Carousel>
-          </div>
           <h1 className='pt-5 px-5 font-bold text-2xl text-white'>Find the best free resources online for learning how to code!</h1>
 
           <Search></Search>
