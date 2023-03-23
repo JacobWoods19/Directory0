@@ -13,10 +13,6 @@ export default function Auth() {
 
 
   const handleLogin = async (email) => {
-    if (email.length === 0) {
-      noEmail()
-      return
-    }
     try {
       setLoading(true)
       const { error } = await supabase.auth.signInWithOtp({ email })

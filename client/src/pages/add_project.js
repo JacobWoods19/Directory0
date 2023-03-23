@@ -37,7 +37,7 @@ class AddProject extends React.Component {
                 tag: tag
             })
             console.log(data_body)
-            const response = await fetch('http://localhost:8000/api/projects', {
+            const response = await fetch('https://directory0.org/api/projects', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

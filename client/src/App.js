@@ -17,10 +17,10 @@ import SearchNewPage from './pages/search_new';
 import TOS from './pages/tos';
 import Privacy from './pages/privacy';
 import {Helmet} from "react-helmet";
-import {ReactGA} from 'react-ga';
+import ReactGA from 'react-ga';
 function getUpvotes(user_id) {
   async function getUpvotesFromDatabase() {
-    const response = await fetch('http://localhost:8000/api/get_upvotes' + '?' + new URLSearchParams(
+    const response = await fetch('https://directory0.org/api/get_upvotes' + '?' + new URLSearchParams(
       {
         user_id: user_id
       }
@@ -38,7 +38,7 @@ function getUpvotes(user_id) {
 
 function getBookmarks(user_id) {
   async function getUpvotesFromDatabase() {
-    const response = await fetch('http://localhost:8000/api/bookmarked' + '?' + new URLSearchParams(
+    const response = await fetch('https://directory0.org/api/bookmarked' + '?' + new URLSearchParams(
       {
         user_id: user_id
       }
@@ -50,8 +50,6 @@ function getBookmarks(user_id) {
   }
   getUpvotesFromDatabase();
 }
-
-
 
 function App() {
   const [session, setSession] = useState(null);

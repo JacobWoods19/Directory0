@@ -9,7 +9,7 @@ import { Carousel } from 'react-responsive-carousel';
 import LanguageCard from '../components/language_card';
 import LanguageCards from '../components/language_cards';
 import CommunityCard from '../components/community_card';
-import {ReactGA} from 'react-ga';
+
 class SearchPage extends React.Component {
   constructor(props) {
     super(props);
@@ -28,20 +28,20 @@ class SearchPage extends React.Component {
       const data = await response.json();
       return data;
     }
-    getSearchResults('http://localhost:8000/api/websites/sorted').then((data) => {
+    getSearchResults('https://directory0.org/api/websites/sorted').then((data) => {
       // console.log(data)
       this.setState({ website_results: data });
     });
 
-    getSearchResults('http://localhost:8000/api/projects/sorted').then((data) => {
+    getSearchResults('https://directory0.org/api/projects/sorted').then((data) => {
       // console.log(data)
       this.setState({ project_results: data });
     });
-    getSearchResults('http://localhost:8000/api/general').then((data) => {
+    getSearchResults('https://directory0.org/api/general').then((data) => {
       // console.log(data)
       this.setState({ general_results: data });
     });
-    getSearchResults('http://localhost:8000/api/communities/sorted').then((data) => {
+    getSearchResults('https://directory0.org/api/communities/sorted').then((data) => {
       // console.log(data)
       this.setState({ community_results: data });
     });
@@ -51,7 +51,7 @@ class SearchPage extends React.Component {
     console.log("SESSION" + this.props.session)
   }
   componentDidMount() {
-    ReactGA.pageView(window.location.pathname);
+
     this.loadSearchResults();
   }
   render() {

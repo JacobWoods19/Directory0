@@ -36,7 +36,7 @@ class AddCommunity extends React.Component {
                 tag: tag,
             })
             console.log(data_body)
-            const response = await fetch('http://localhost:8000/api/communities', {
+            const response = await fetch('https://directory0.org/api/communities', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
