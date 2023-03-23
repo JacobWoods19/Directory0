@@ -61,7 +61,7 @@ class SearchPage extends React.Component {
           
           <div class="grid place-items-center p-5">
           <h1 className='pt-5 font-bold text-md text-white'>Great Communities To Discover</h1>
-            <Carousel showArrows={true} width={"100%"} dynamicHeight={false} autoPlay={true} infiniteLoop={true} className="p-5">
+            <Carousel showArrows={true} width={"80%"} dynamicHeight={false} autoPlay={true} infiniteLoop={true} className="p-5">
               <div>
                 <img src="https://miro.medium.com/max/1200/1*nm4VZt2HpZj0CW3FL3b-eg.png" />
                 <h1 className="legend text-2xl ">CS50</h1>
