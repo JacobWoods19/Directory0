@@ -26,7 +26,12 @@ class AddCommunity extends React.Component {
         let url = document.getElementById("url").value;
         let description = document.getElementById("description").value;
         let tag = document.getElementById("tag").value;
-
+        if (tag == "sql" || tag== "css" || tag == "html") {
+            tag = tag.toUpperCase();
+        }
+        else{
+            tag = tag.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
+        }
         //upload to database
         async function addWebsite() {
             let data_body = JSON.stringify({
