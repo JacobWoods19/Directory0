@@ -35,7 +35,7 @@ export default function CommunityCard (props) {
 
   async function upvote(user_id, id, type) {
     console.log("TYPE IS: " + type)
-    const response = await fetch('https://directory0.org/api/upvote', {
+    const response = await fetch('https://api.directory0.org/api/upvote', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -69,7 +69,7 @@ export default function CommunityCard (props) {
     }
   }
   async function downvote(user_id, id, type) {
-    const response = await fetch('https://directory0.org/api/downvote', {
+    const response = await fetch('https://api.directory0.org/api/downvote', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -115,7 +115,7 @@ export default function CommunityCard (props) {
   function addBookmarkToDatabase(id) {
     alert("Bookmark working on it!")
     async function add() {
-      const response = await fetch('https://directory0.org/api/bookmarked', {
+      const response = await fetch('https://api.directory0.org/api/bookmarked', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -144,7 +144,7 @@ export default function CommunityCard (props) {
   function removeBookmarkFromDatabase(id) {
     alert("Bookmark working on it!")
     async function remove() {
-      const response = await fetch('https://directory0.org/api/bookmarked/remove', {
+      const response = await fetch('https://api.directory0.org/api/bookmarked/remove', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
