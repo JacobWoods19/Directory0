@@ -32,23 +32,23 @@ class SearchResultPage extends React.Component {
       const data = await response.json();
       return data;
     }
-    getSearchResults('https://directory0.org/api/websites/search').then((data) => {
+    getSearchResults('https://api.directory0.org/api/websites/search').then((data) => {
       this.setState({ website_results: data });
     });
-    getSearchResults('https://directory0.org/api/videos/search').then((data) => {
+    getSearchResults('https://api.directory0.org/api/videos/search').then((data) => {
       this.setState({ video_results: data });
     });
-    getSearchResults('https://directory0.org/api/courses/search').then((data) => {
+    getSearchResults('https://api.directory0.org/api/courses/search').then((data) => {
       this.setState({ course_results: data });
     });
-    getSearchResults('https://directory0.org/api/projects/search').then((data) => {
+    getSearchResults('https://api.directory0.org/api/projects/search').then((data) => {
 
       this.setState({ project_results: data });
     });
-    getSearchResults('https://directory0.org/api/communities/search').then((data) => {
+    getSearchResults('https://api.directory0.org/api/communities/search').then((data) => {
       this.setState({ community_results: data });
     });
-    getSearchResults('https://directory0.org/api/info/search').then((data) => {
+    getSearchResults('https://api.directory0.org/api/info/search').then((data) => {
       try {
         if (data[0]) {
           this.setState({ info_result: data[0] });

@@ -28,20 +28,20 @@ class SearchPage extends React.Component {
       const data = await response.json();
       return data;
     }
-    getSearchResults('https://directory0.org/api/websites/sorted').then((data) => {
+    getSearchResults('https://api.directory0.org/api/websites/sorted').then((data) => {
       // console.log(data)
       this.setState({ website_results: data });
     });
 
-    getSearchResults('https://directory0.org/api/projects/sorted').then((data) => {
+    getSearchResults('https://api.directory0.org/api/projects/sorted').then((data) => {
       // console.log(data)
       this.setState({ project_results: data });
     });
-    getSearchResults('https://directory0.org/api/general').then((data) => {
+    getSearchResults('https://api.directory0.org/api/general').then((data) => {
       // console.log(data)
       this.setState({ general_results: data });
     });
-    getSearchResults('https://directory0.org/api/communities/sorted').then((data) => {
+    getSearchResults('https://api.directory0.org/api/communities/sorted').then((data) => {
       // console.log(data)
       this.setState({ community_results: data });
     });

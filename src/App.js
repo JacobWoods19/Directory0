@@ -20,7 +20,7 @@ import {Helmet} from "react-helmet";
 import ReactGA from 'react-ga';
 function getUpvotes(user_id) {
   async function getUpvotesFromDatabase() {
-    const response = await fetch('https://directory0.org/api/get_upvotes' + '?' + new URLSearchParams(
+    const response = await fetch('https://api.directory0.org/api/get_upvotes' + '?' + new URLSearchParams(
       {
         user_id: user_id
       }
@@ -38,7 +38,7 @@ function getUpvotes(user_id) {
 
 function getBookmarks(user_id) {
   async function getUpvotesFromDatabase() {
-    const response = await fetch('https://directory0.org/api/bookmarked' + '?' + new URLSearchParams(
+    const response = await fetch('https://api.directory0.org/api/bookmarked' + '?' + new URLSearchParams(
       {
         user_id: user_id
       }
