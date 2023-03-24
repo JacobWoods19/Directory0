@@ -81,7 +81,6 @@ export default function Card(props) {
       return true;
     }
     if (response.status === 400) {
-      alert("You have already upvoted this project!")
       return false;
     }
     else {
@@ -122,7 +121,6 @@ export default function Card(props) {
     }
   }
   function addBookmarkToDatabase(id) {
-    alert("Bookmark working on it!")
     async function add() {
       const response = await fetch('https://api.directory0.org/api/bookmarked', {
         method: 'POST',
@@ -136,11 +134,9 @@ export default function Card(props) {
       });
       if (response.status === 200) {
         addBookmark(id)
-        alert("Bookmark added!")
         return true;
       }
       if (response.status === 400) {
-        alert("Bookmark failed!")
         return false;
       }
       else {
@@ -151,7 +147,6 @@ export default function Card(props) {
 
   }
   function removeBookmarkFromDatabase(id) {
-    alert("Bookmark working on it!")
     async function remove() {
       const response = await fetch('https://api.directory0.org/api/bookmarked/remove', {
         method: 'POST',

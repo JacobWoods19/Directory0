@@ -27,7 +27,7 @@ class Saved extends React.Component {
       const data = await response.json();
       return data;
     }
-    getSearchResults("https://directory0.org/api/search/id", fetch_id).then((data) => {
+    getSearchResults("https://api.directory0.org/api/search/id", fetch_id).then((data) => {
       //append to saved
       console.log(data);
       this.setState({ saved: this.state.saved.concat(data) });
