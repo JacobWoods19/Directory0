@@ -38,7 +38,7 @@ class AddWebsite extends React.Component {
                 price: 0
             })
             console.log(data_body)
-            const response = await fetch('https://api.directory0.org/api/website', {
+            const response = await fetch('https://api.directory0.org/api/websites', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
