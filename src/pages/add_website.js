@@ -27,9 +27,9 @@ class AddWebsite extends React.Component {
         let url = document.getElementById("url").value;
         let description = document.getElementById("description").value;
         var tag = document.getElementById("tag").value.toLowerCase();
-        for (let i = 0; i < tag.length; i++) {
-            tag[i] = tag[i][0].toUpperCase() + tag[i].substr(1);
-        }
+        // convert all words to capitalized in tag
+        tag = tag.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
+        
         //upload to database
         async function addWebsite() {
             let data_body = JSON.stringify({
