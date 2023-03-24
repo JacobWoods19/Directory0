@@ -14,10 +14,13 @@ export default function Footer() {
                     <div>
                     </div>
                     <div>
-                        <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Follow us</h2>
+                        <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Get In Touch</h2>
                         <ul class="text-gray-600 dark:text-gray-400">
                             <li>
                                 <a href="https://twitter.com/JWoodsDev" class="hover:underline">Twitter</a>
+                            </li>
+                            <li>
+                                <a href="mailto:contactdirectory0@gmail.com" class="hover:underline">Email</a>
                             </li>
                         </ul>
                     </div>

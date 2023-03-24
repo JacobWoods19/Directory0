@@ -26,7 +26,7 @@ class AddWebsite extends React.Component {
         let title = document.getElementById("title").value;
         let url = document.getElementById("url").value;
         let description = document.getElementById("description").value;
-        let tag = document.getElementById("tag").value;
+        let tag = document.getElementById("tag").value.toi;
 
         //upload to database
         async function addWebsite() {
