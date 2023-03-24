@@ -14,14 +14,12 @@ class Saved extends React.Component {
       saved_ids = JSON.parse(saved_ids);
       this.setState({ saved_ids: saved_ids });
     }
-    console.log("NUMBER OF SAVED IDS " + saved_ids.length);
     for (const project of saved_ids) {
       this.fetchSavedItem(project);
     }
   }
 
   fetchSavedItem(fetch_id) {
-    console.log("FETCHED SAVED ITEM");
     async function getSearchResults(url, id) {
       const response = await fetch(url + "?" + new URLSearchParams({ id: id }));
       const data = await response.json();
@@ -29,7 +27,6 @@ class Saved extends React.Component {
     }
     getSearchResults("https://api.directory0.org/api/search/id", fetch_id).then((data) => {
       //append to saved
-      console.log(data);
       this.setState({ saved: this.state.saved.concat(data) });
     });
   }

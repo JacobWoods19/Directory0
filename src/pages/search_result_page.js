@@ -64,9 +64,6 @@ class SearchResultPage extends React.Component {
 
   }
   componentDidMount() {
-    const search_term = window.sessionStorage.getItem("search");
-    console.log(search_term);
-    //call api and set state
     this.loadSearchResults();
   }
   render() {

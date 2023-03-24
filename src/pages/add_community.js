@@ -35,7 +35,6 @@ class AddCommunity extends React.Component {
                 description: description,
                 tag: tag,
             })
-            console.log(data_body)
             const response = await fetch('https://api.directory0.org/api/communities', {
                 method: 'POST',
                 headers: {
@@ -59,7 +58,6 @@ class AddCommunity extends React.Component {
             return data;
         }
         addWebsite().then((data) => {
-            console.log(data);
             // window.location.href = "/search";
         }
         );

@@ -36,7 +36,6 @@ class AddProject extends React.Component {
                 description: description,
                 tag: tag
             })
-            console.log(data_body)
             const response = await fetch('https://api.directory0.org/api/projects', {
                 method: 'POST',
                 headers: {
@@ -60,7 +59,6 @@ class AddProject extends React.Component {
             return data;
         }
         addProject().then((data) => {
-            console.log(data);
             // window.location.href = "/search";
         }
         );

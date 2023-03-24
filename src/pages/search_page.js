@@ -29,12 +29,11 @@ class SearchPage extends React.Component {
       return data;
     }
     getSearchResults('https://api.directory0.org/api/websites/sorted').then((data) => {
-      // console.log(data)
       this.setState({ website_results: data });
     });
 
     getSearchResults('https://api.directory0.org/api/projects/sorted').then((data) => {
-      // console.log(data)
+      // (data)
       this.setState({ project_results: data });
     });
     getSearchResults('https://api.directory0.org/api/general').then((data) => {
@@ -48,7 +47,6 @@ class SearchPage extends React.Component {
 
   }
   componentDidRefresh() {
-    console.log("SESSION" + this.props.session)
   }
   componentDidMount() {
 

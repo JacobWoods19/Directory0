@@ -37,9 +37,7 @@ class AddWebsite extends React.Component {
                 url: url,
                 description: description,
                 tag: tag,
-                price: 0
             })
-            console.log(data_body)
             const response = await fetch('https://api.directory0.org/api/websites', {
                 method: 'POST',
                 headers: {
@@ -63,7 +61,6 @@ class AddWebsite extends React.Component {
             return data;
         }
         addWebsite().then((data) => {
-            console.log(data);
             // window.location.href = "/search";
         }
         );

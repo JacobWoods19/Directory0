@@ -36,16 +36,13 @@ class SearchNewPage extends React.Component {
       return data;
     }
     getSearchResults('https://api.directory0.org/api/websites/search/new').then((data) => {
-      console.log("Web data " + data.results)
       this.setState({ website_results: data.results });
     });
     getSearchResults('https://api.directory0.org/api/projects/search/new').then((data) => {
-      console.log(data)
       this.setState({ project_pages: this.state.project_pages + 1 })
       this.setState({ project_results: data.results });
     });
     getSearchResults('https://api.directory0.org/api/communities/search/new').then((data) => {
-      console.log("Community Results" + data.results)
       this.setState({ project_pages: this.state.community_pages + 1 })
       this.setState({ community_results: data.results });
     });
@@ -64,7 +61,6 @@ class SearchNewPage extends React.Component {
     });
   }
   loadMoreWebsites() {
-    console.log("load more websites")
     async function getSearchResults(url, page) {
       const search_term = window.sessionStorage.getItem("search");
       const response = await fetch(url + '?' + new URLSearchParams(
@@ -78,7 +74,6 @@ class SearchNewPage extends React.Component {
       return data;
     }
     getSearchResults('https://api.directory0.org/api/websites/search/new', this.state.website_pages + 1).then((data) => {
-      console.log("Web data " + data)
       if (data.results.length == 0) {
         alert("No more results")
         return;
@@ -88,7 +83,6 @@ class SearchNewPage extends React.Component {
     });
   }
   loadMoreProjects() {
-    console.log("load more projects")
     async function getSearchResults(url, page) {
       const search_term = window.sessionStorage.getItem("search");
       const response = await fetch(url + '?' + new URLSearchParams(
@@ -102,7 +96,6 @@ class SearchNewPage extends React.Component {
       return data;
     }
     getSearchResults('https://api.directory0.org/api/projects/search/new', this.state.project_pages).then((data) => {
-      console.log("Project data " + data)
       if (data.results.length == 0) {
         alert("No more results")
         return;
@@ -112,7 +105,6 @@ class SearchNewPage extends React.Component {
     });
   }
   loadMoreCommunities() {
-    console.log("load more communities")
     async function getSearchResults(url, page) {
       const search_term = window.sessionStorage.getItem("search");
       const response = await fetch(url + '?' + new URLSearchParams(
@@ -126,7 +118,6 @@ class SearchNewPage extends React.Component {
       return data;
     }
     getSearchResults('https://api.directory0.org/api/communities/search/new', this.state.project_pages).then((data) => {
-      console.log("Community data " + data)
       if (data.results.length == 0) {
         alert("No more results")
         return;
@@ -138,7 +129,6 @@ class SearchNewPage extends React.Component {
 
   componentDidMount() {
     const search_term = window.sessionStorage.getItem("search");
-    console.log(search_term);
     this.loadSearchResults();
   }
   render() {
