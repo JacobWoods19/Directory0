@@ -37,7 +37,6 @@ class Saved extends React.Component {
         <h1 className="pt-5 px-5 font-bold text-lg text-white">Saved</h1>
         <div className=" p-5">
           {this.state.saved.map((result) => {
-
             return (
               <div className="py-2">
                 <Card
