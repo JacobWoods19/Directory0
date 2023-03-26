@@ -33,7 +33,7 @@ class Search extends React.Component {
         // format string to be capitalized
         var search_term = this.state.search_term;
         search_term = search_term.toLowerCase();
-        search_term = search_term.charAt(0).toUpperCase() + search_term.slice(1);
+        search_term = search_term.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase(); });
         window.location.href = "/result";
         window.sessionStorage.setItem("search", search_term);
 
