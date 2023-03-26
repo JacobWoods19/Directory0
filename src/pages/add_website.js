@@ -59,7 +59,10 @@ class AddWebsite extends React.Component {
                 toast("Added Website! After review, it will be added to the site. Thank you!");
             }
             else {
-                toast("Error adding. Please try again.");
+                //get json from response
+                const data = await response.json();
+                toast(data.message);
+                
             }
             const data = await response.json();
             return data;
