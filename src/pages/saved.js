@@ -49,7 +49,7 @@ class Saved extends React.Component {
                   upvotes={result.upvotes}
                   session={this.props.session}
                   id={result._id}
-                  type="general"
+                  type={result.type}
                 ></Card>
               </div>
             );
