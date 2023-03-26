@@ -22,6 +22,9 @@ export default function Footer() {
                             <li>
                                 <a href="mailto:contactdirectory0@gmail.com" class="hover:underline">Email</a>
                             </li>
+                            <li>
+                                <a href="https://forms.gle/7LfdQctnkjwG5BkF9" class="hover:underline">Feedback</a>
+                            </li>
                         </ul>
                     </div>
                     <div>
