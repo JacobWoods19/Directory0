@@ -2,9 +2,8 @@ import React from "react";
 import { useState } from "react";
 export default function TOS(props) {
     return (
-        <div className="bg-gray-900 flex flex-col items-center justify-center mx-auto h-screen ">
-            <div className="multiline text-white p-5"
-            >
+        <div className="bg-slate-900 ">
+            <div className="text-white">
                 <h1 className="text-4xl font-bold">Terms of Service</h1>
 
                 Welcome to Directory0.org (the "Website"), a platform designed to help you find resources and communities from across the web to learn programming. These Terms of Service ("Terms") govern your access to and use of the Website and its services. Please read these Terms carefully before using the Website.

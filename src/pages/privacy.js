@@ -2,10 +2,11 @@ import React from "react";
 import { useState } from "react";
 export default function Privacy(props) {
     return (
-        <div className="bg-gray-900 flex flex-col items-center justify-center mx-auto h-screen ">
+        <div className="bg-slate-900">
             <div className="multiline text-white p-5"
             >
                 <h1 className="text-4xl font-bold">Privacy Policy</h1>
+                <div className="container mx-auto px-4 py-8">
                 At Directory0.org, we value your privacy and are committed to protecting your personal information. This Privacy Policy outlines the types of information we collect, how we use and store that information, and your rights regarding your personal data.
 
                 By using the Website, you agree to the collection and use of information in accordance with this Privacy Policy.
@@ -54,6 +55,7 @@ export default function Privacy(props) {
                 Contact Us
 
                 If you have any questions or concerns about this Privacy Policy or our privacy practices, please contact us at [email address].
+                </div>
             </div>
         </div>)
 }
