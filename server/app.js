@@ -53,6 +53,8 @@ async function run() {
                 const document = await collection.findOne({ _id: new ObjectId(id) });
                 if (document) {
                     result = document;
+                    //append type to result
+                    result.type = collectionName;
                     break;
                 }
             }
