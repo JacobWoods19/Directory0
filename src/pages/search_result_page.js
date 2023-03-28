@@ -81,7 +81,7 @@ class SearchResultPage extends React.Component {
             <h1 className='text-md py-3 font-bold text-white '>{window.sessionStorage.getItem("search")}  Communities</h1>
             <div className='grid grid-cols-1 gap-9 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
               {this.state.community_results.map((result) => {
-                return (<div className='py-2'><CommunityCard className="my-5" title={result.name} description={result.description} url={result.url} tag={result.tag} upvotes={result.upvotes}></CommunityCard></div>)
+                return (<div className='py-2'><CommunityCard className="my-5" title={result.name} description={result.description} url={result.url} tag={result.tag} upvotes={result.upvotes} session={this.props.session} ></CommunityCard></div>)
               })}
             </div>
             <h1 className='text-md py-3 font-bold text-white '>{window.sessionStorage.getItem("search")} Websites</h1>
