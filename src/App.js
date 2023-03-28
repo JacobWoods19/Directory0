@@ -25,7 +25,7 @@ function getUpvotes(user_id) {
         user_id: user_id
       }
     ))
-
+    //comment
     const data = await response.json();
  
     if (data?.upvotes && data?.upvotes.length > 0) {
