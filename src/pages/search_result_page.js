@@ -75,13 +75,13 @@ class SearchResultPage extends React.Component {
           <NewButton is_new={false} ></NewButton>
           <div className='p-5'>
             <div className='flex justify-between'>
-              <h1 className='text-2xl py-3 font-bold text-white '> Top {window.sessionStorage.getItem("search")}  Resources</h1>
+              <h1 className='text-2xl py-3 font-bold text-white '> Top {window.sessionStorage.getItem("search")} Resources</h1>
             </div>
             {this.state.info_card_bool ? <LanguageCard language={this.state.info_result.language} icon={this.state.info_result.image_url} description={this.state.info_result.description}></LanguageCard> : null}
-            <h1 className='text-md py-3 font-bold text-white '>{window.sessionStorage.getItem("search")}  Communities</h1>
+            <h1 className='text-md py-3 font-bold text-white '>{window.sessionStorage.getItem("search")} Communities</h1>
             <div className='grid grid-cols-1 gap-9 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
               {this.state.community_results.map((result) => {
-                return (<div className='py-2'><Card className="my-5" title={result.name} description={result.description} url={result.url} tag={result.tag} upvotes={result.upvotes} posted={result.publish_date} id={result._id} session={this.props.session} type="websites"></Card></div>)
+                return (<div className='py-2'><Card className="my-5" title={result.name} description={result.description} url={result.url} tag={result.tag} upvotes={result.upvotes} posted={result.publish_date} id={result._id} session={this.props.session} type="communities"></Card></div>)
               })}
             </div>
             <h1 className='text-md py-3 font-bold text-white '>{window.sessionStorage.getItem("search")} Websites</h1>
