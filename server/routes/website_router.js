@@ -73,7 +73,7 @@ router.get('/sorted', async (req, res) => {
 router.get('/search', async (req, res) => {
     try {
         const tag_input = req.query.tag;
-        var results = await client.db("sources").collection('websites').find({ tag: tag_input }).find({is_published: true }).sort({ upvotes: -1 }).toArray()
+        var results = await client.db("sources").collection('websites').find({ tag: tag_input, is_published: true  }).sort({ upvotes: -1 }).toArray()
         results = results.slice(0, 7);
         res.json(results);
     }
@@ -90,9 +90,9 @@ router.get('/search/new', async (req, res) => {
     const page = parseInt(req.query.page) || 1; // default page to 1 if not specified
     const skip = (page - 1) * limit;
 
-    const query = { tag: req.query.tag };
+    const query = { tag: req.query.tag , is_published: true  };
 
-    const results = await client.db("sources").collection('websites').find({is_published: true })
+    const results = await client.db("sources").collection('websites')
         .find(query)
         .sort({ published_date: -1 })
         .skip(skip)
@@ -149,7 +149,7 @@ router.post("/", jsonParser, async (req, res) => {
 //get all websites... sort by upvotes
 router.get('/', async (req, res) => {
     try {
-        const results = await client.db("sources").collection('websites').find().toArray();
+        const results = await client.db("sources").collection('websites').find({is_published: true }).toArray();
         res.json(results);
     }
     catch (err) {
@@ -178,9 +178,9 @@ router.get('/search/new', async (req, res) => {
         const page = parseInt(req.query.page) || 1; // default page to 1 if not specified
         const skip = (page - 1) * limit;
 
-        const query = { tag: req.query.tag };
+        const query = { tag: req.query.tag , is_published: true };
 
-        const results = await client.db("sources").collection('websites').find({is_published: true })
+        const results = await client.db("sources").collection('websites')
             .find(query)
             .sort({ published_date: -1 })
             .skip(skip)
@@ -198,7 +198,7 @@ router.get('/search/new', async (req, res) => {
 router.get('/unpublished', async (req, res) => {
     try {
 
-        if (req.query.password != "averysecurepassword") {
+        if (req.query.password != "averysecurepassword42069") {
             res.json({ message: "Invalid password" }, 400);
             return;
         }
@@ -213,7 +213,7 @@ router.get('/unpublished', async (req, res) => {
 //allow admin to publish a website
 router.post('/publish', jsonParser, async (req, res) => {
     try {
-        if (req.query.password != "averysecurepassword") {
+        if (req.query.password != "averysecurepassword42069") {
             res.json({ message: "Invalid password" }, 400);
             return;
         }

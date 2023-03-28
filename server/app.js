@@ -50,7 +50,7 @@ async function run() {
             const collections = ['websites', 'projects', 'general', 'communities'];
             for (const collectionName of collections) {
                 const collection = database.collection(collectionName);
-                const document = await collection.findOne({ _id: new ObjectId(id) });
+                const document = await collection.findOne({ _id: new ObjectId(id), is_published: true  });
                 if (document) {
                     result = document;
                     //append type to result
@@ -302,7 +302,7 @@ async function run() {
     });
     app.get('/api/general', async (req, res) => {
         try {
-            const results = await client.db("sources").collection('general').find().toArray();
+            const results = await client.db("sources").collection('general').find({is_published: true }).toArray();
             res.json(results);
         }
         catch (err) {
@@ -336,7 +336,7 @@ async function run() {
                 is_published: true,
                 tag: req.body.tag,
             };
-            const general_exists = await client.db("sources").collection('general').find({ url: general.url }).toArray();
+            const general_exists = await client.db("sources").collection('general').find({ url: general.url, is_published: true }).toArray();
             if (general_exists.length != 0) {
                 res.json({ message: "Resource already exists in database" }, 400);
                 return;

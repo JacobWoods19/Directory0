@@ -58,7 +58,7 @@ router.get('/', async (req, res) => {
 router.get('/search', async (req, res) => {
     try {
         const tag_input = req.query.tag;
-        var results = await client.db("sources").collection('projects').find({ tag: tag_input }).find({is_published : true}).sort({ upvotes: -1 }).toArray()
+        var results = await client.db("sources").collection('projects').find({ tag: tag_input, is_published: true  }).sort({ upvotes: -1 }).toArray()
         results = results.slice(0, 7);
         res.json(results);
     } catch (err) {
@@ -81,10 +81,9 @@ router.get('/search/new', async (req, res) => {
     const limit = parseInt(req.query.limit) || 10; // default limit to 10 if not specified
     const page = parseInt(req.query.page) || 1; // default page to 1 if not specified
     const skip = (page - 1) * limit;
-    const query = { tag: req.query.tag };
+    const query = { tag: req.query.tag, is_published: true  };
     const results = await client.db("sources").collection('projects')
         .find(query)
-        .find({is_published : true})
         .sort({ published_date: -1 })
         .skip(skip)
         .limit(limit) // limit to 10 results

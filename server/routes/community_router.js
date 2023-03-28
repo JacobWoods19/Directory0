@@ -60,7 +60,7 @@ router.post("/", jsonParser, async (req, res) => {
 });
 router.get('/', async (req, res) => {
     try {
-        const results = await client.db("sources").collection('communities').find({ tag: "starred" }).find({is_published: true }).toArray();
+        const results = await client.db("sources").collection('communities').find({ tag: "starred" , is_published: true }).toArray();
         res.json(results);
     }
     catch (err) {
@@ -70,7 +70,7 @@ router.get('/', async (req, res) => {
 });
 router.get('/search', async (req, res) => {
     try {
-        const results = await client.db("sources").collection('communities').find({ tag: req.query.tag }).find({is_published: true }).toArray();
+        const results = await client.db("sources").collection('communities').find({ tag: req.query.tag, is_published: true }).toArray();
         res.json(results);
     } catch (err) {
         console.log(err);
@@ -84,13 +84,12 @@ router.get('/search/new', async (req, res) => {
         const page = parseInt(req.query.page) || 1; // default page to 1 if not specified
         const skip = (page - 1) * limit;
 
-        const query = { tag: req.query.tag };
+        const query = { tag: req.query.tag, is_published: true };
         const count = await client.db("sources").collection('communities').countDocuments(query);
         const totalPages = Math.ceil(count / limit);
 
         const results = await client.db("sources").collection('communities')
             .find(query)
-            .find({is_published: true })
             .sort({ published_date: -1 })
             .skip(skip)
             .limit(limit)
@@ -106,7 +105,7 @@ router.get('/search/new', async (req, res) => {
 });
 router.get('/unpublished', async (req, res) => {
     try {
-        if (req.query.password != "averysecurepassword") {
+        if (req.query.password != "averysecurepassword42069") {
             res.json({ message: "Invalid password" }, 400);
             return;
         }
