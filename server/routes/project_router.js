@@ -33,7 +33,7 @@ router.post("/", jsonParser, async (req, res) => {
             is_published: false,
             tag: req.body.tag,
         };
-        const project_exists = await client.db("sources").collection('projects').find({ url: project.url }).toArray();
+        const project_exists = await client.db("sources").collection('projects').find({ url: project.url }).find({is_published : true}).toArray();
         if (project_exists.length != 0) {
             res.json({ message: "Project already exists in database" }, 400);
             return;
@@ -47,7 +47,7 @@ router.post("/", jsonParser, async (req, res) => {
 });
 router.get('/', async (req, res) => {
     try {
-        const results = await client.db("sources").collection('projects').find().toArray();
+        const results = await client.db("sources").collection('projects').find({is_published: true }).toArray();
         res.json(results);
     } catch (err) {
         console.log(err);
@@ -58,7 +58,7 @@ router.get('/', async (req, res) => {
 router.get('/search', async (req, res) => {
     try {
         const tag_input = req.query.tag;
-        var results = await client.db("sources").collection('projects').find({ tag: tag_input }).sort({ upvotes: -1 }).toArray()
+        var results = await client.db("sources").collection('projects').find({ tag: tag_input }).find({is_published : true}).sort({ upvotes: -1 }).toArray()
         results = results.slice(0, 7);
         res.json(results);
     } catch (err) {
@@ -68,7 +68,7 @@ router.get('/search', async (req, res) => {
 });
 router.get('/sorted', async (req, res) => {
     try {
-        var results = await client.db("sources").collection('projects').find().sort({ upvotes: -1 }).toArray()
+        var results = await client.db("sources").collection('projects').find({is_published: true }).sort({ upvotes: -1 }).toArray()
         results = results.slice(0, 7);
         res.json(results);
     } catch (err) {
@@ -84,6 +84,7 @@ router.get('/search/new', async (req, res) => {
     const query = { tag: req.query.tag };
     const results = await client.db("sources").collection('projects')
         .find(query)
+        .find({is_published : true})
         .sort({ published_date: -1 })
         .skip(skip)
         .limit(limit) // limit to 10 results

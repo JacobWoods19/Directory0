@@ -11,7 +11,7 @@ let client = new MongoClient("mongodb+srv://doadmin:FG3hx582n9oH1b06@db-mongodb-
 
 router.get('/sorted', async (req, res) => {
     try {
-        var results = await client.db("sources").collection('communities').find().sort({ upvotes: -1 }).toArray()
+        var results = await client.db("sources").collection('communities').find({is_published: true }).sort({ upvotes: -1 }).toArray()
         results = results.slice(0, 6);
         res.json(results);
     } catch (err) {
@@ -60,7 +60,7 @@ router.post("/", jsonParser, async (req, res) => {
 });
 router.get('/', async (req, res) => {
     try {
-        const results = await client.db("sources").collection('communities').find({ tag: "starred" }).toArray();
+        const results = await client.db("sources").collection('communities').find({ tag: "starred" }).find({is_published: true }).toArray();
         res.json(results);
     }
     catch (err) {
@@ -70,7 +70,7 @@ router.get('/', async (req, res) => {
 });
 router.get('/search', async (req, res) => {
     try {
-        const results = await client.db("sources").collection('communities').find({ tag: req.query.tag }).toArray();
+        const results = await client.db("sources").collection('communities').find({ tag: req.query.tag }).find({is_published: true }).toArray();
         res.json(results);
     } catch (err) {
         console.log(err);
@@ -90,6 +90,7 @@ router.get('/search/new', async (req, res) => {
 
         const results = await client.db("sources").collection('communities')
             .find(query)
+            .find({is_published: true })
             .sort({ published_date: -1 })
             .skip(skip)
             .limit(limit)

@@ -49,7 +49,7 @@ router.post("/", jsonParser, async (req, res) => {
 //get all websites... sort by upvotes
 router.get('/', async (req, res) => {
     try {
-        const results = await client.db("sources").collection('websites').find().toArray();
+        const results = await client.db("sources").collection('websites').find({is_published: true }).toArray();
         res.json(results);
     }
     catch (err) {
@@ -60,7 +60,7 @@ router.get('/', async (req, res) => {
 //get all websites... sort by upvotes
 router.get('/sorted', async (req, res) => {
     try {
-        var results = await client.db("sources").collection('websites').find().sort({ upvotes: -1 }).toArray()
+        var results = await client.db("sources").collection('websites').find({is_published: true }).sort({ upvotes: -1 }).toArray()
         // limit the number of results to 10 
         results = results.slice(0, 7);
         res.json(results);
@@ -73,7 +73,7 @@ router.get('/sorted', async (req, res) => {
 router.get('/search', async (req, res) => {
     try {
         const tag_input = req.query.tag;
-        var results = await client.db("sources").collection('websites').find({ tag: tag_input }).sort({ upvotes: -1 }).toArray()
+        var results = await client.db("sources").collection('websites').find({ tag: tag_input }).find({is_published: true }).sort({ upvotes: -1 }).toArray()
         results = results.slice(0, 7);
         res.json(results);
     }
@@ -82,6 +82,7 @@ router.get('/search', async (req, res) => {
         return;
     }
 });
+
 //Search by tag name , checks if tag name is in the tags array of document
 router.get('/search/new', async (req, res) => {
     try {
@@ -91,7 +92,7 @@ router.get('/search/new', async (req, res) => {
 
     const query = { tag: req.query.tag };
 
-    const results = await client.db("sources").collection('websites')
+    const results = await client.db("sources").collection('websites').find({is_published: true })
         .find(query)
         .sort({ published_date: -1 })
         .skip(skip)
@@ -159,7 +160,7 @@ router.get('/', async (req, res) => {
 //get all websites... sort by upvotes
 router.get('/sorted', async (req, res) => {
     try {
-        var results = await client.db("sources").collection('websites').find().sort({ upvotes: -1 }).toArray()
+        var results = await client.db("sources").collection('websites').find({is_published: true }).sort({ upvotes: -1 }).toArray()
         // limit the number of results to 10 
         results = results.slice(0, 7);
         res.json(results);
@@ -179,7 +180,7 @@ router.get('/search/new', async (req, res) => {
 
         const query = { tag: req.query.tag };
 
-        const results = await client.db("sources").collection('websites')
+        const results = await client.db("sources").collection('websites').find({is_published: true })
             .find(query)
             .sort({ published_date: -1 })
             .skip(skip)
