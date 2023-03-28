@@ -2,9 +2,7 @@ import React, { useEffect } from 'react';
 
 function getFaviconFromUrl(url) {
   var url = new URL(url);
-  // console.log(url.protocol + "//" + url.hostname + "/favicon.ico")
   url = url.protocol + "//" + url.hostname + "/favicon.ico";
-  // if the url returns a 404, return the default favicon
   return url;
 }
 
@@ -54,7 +52,6 @@ export default function Card(props) {
   //add upvotes prop to state and update it when upvote is clicked
 
   async function upvote(user_id, id, type) {
-    console.log("TYPE IS: " + type)
     const response = await fetch('https://api.directory0.org/api/upvote', {
       method: 'POST',
       headers: {
@@ -243,7 +240,6 @@ export default function Card(props) {
         <h1 class="text-white font-semibold text-sm cursor-pointer p-2" onClick={() => {
           if (props?.session?.data.session?.user) {
             if (!hasUpvoted) {
-              console.log(props.id)
               upvote(props.session.data.session.user.id, props.id, props.type)
             }
             else {

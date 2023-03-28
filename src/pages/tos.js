@@ -5,7 +5,7 @@ export default function TOS(props) {
         <div className="bg-slate-900 ">
             <div className="text-white">
                 <h1 className="text-4xl font-bold">Terms of Service</h1>
-
+                <div className="container mx-auto px-4 py-8">
                 Welcome to Directory0.org (the "Website"), a platform designed to help you find resources and communities from across the web to learn programming. These Terms of Service ("Terms") govern your access to and use of the Website and its services. Please read these Terms carefully before using the Website.
 
                 By accessing or using Directory0.org, you agree to be bound by these Terms. If you do not agree to these Terms, you are not permitted to use the Website.
@@ -56,7 +56,7 @@ export default function TOS(props) {
                 Directory0.org is not affiliated with, endorsed by, or representative of any community or website posted or listed on the Website. If you are the owner or authorized representative of a community or website listed on the Website and wish to have it removed, please contact us at [email address]. Directory0.org reserves the right to remove any community or website from the Website at its sole discretion and without notice.
 
                 By using the Website, you acknowledge and agree that Directory0.org is not responsible for the content, policies, or practices of any community or website posted or listed on the Website, and that your use of any such community or website is at your own risk.
-
+                </div>
             </div>
         </div>)
 }

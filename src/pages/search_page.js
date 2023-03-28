@@ -64,7 +64,7 @@ class SearchPage extends React.Component {
             <h1 className='pt-5 font-bold text-md text-white'>Great Communities To Discover</h1>
             <div className='pt-5 grid grid-cols-1 gap-9 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
               {this.state.community_results.map((result) => {
-                return (<div className='py-2'><CommunityCard className="my-5" title={result.name} description={result.description} url={result.url} tag={result.tag} upvotes={result.upvotes} session={this.props.session} id={result._id} type="communities"></CommunityCard></div>)
+                return (<div className='py-2'><Card className="my-5" title={result.name} description={result.description} url={result.url} tag={result.tag} upvotes={result.upvotes} posted={result.publish_date} id={result._id} session={this.props.session} type="communities"></Card></div>)
               })}
             </div>
           </div>
