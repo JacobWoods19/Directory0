@@ -22,7 +22,9 @@ export default function Auth() {
       emailNotSent()
     } finally {
       setLoading(false)
+    }
   }
+
   return (
     <div>
       <ToastContainer />
